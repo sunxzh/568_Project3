@@ -4,6 +4,10 @@
 		_MainTex ("Base (RGB)", 2D) = "white" {}
 	}
 	SubShader {
+	     Cull Off
+         ZWrite On
+         Lighting Off
+         Blend SrcAlpha OneMinusSrcAlpha
 		Tags { "RenderType"="Opaque" }
 		LOD 200
 		

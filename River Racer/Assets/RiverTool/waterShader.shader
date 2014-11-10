@@ -36,9 +36,10 @@ SubShader
 //		Tags { "Queue"="Transparent+1" "RenderType"="Opaque" }
 	//	LOD 200
 		
-		Blend SrcAlpha OneMinusSrcAlpha 
-//		ZTest Less
-		ZWrite Off
+	    Cull Off
+         ZWrite On
+         Lighting Off
+         Blend SrcAlpha OneMinusSrcAlpha
 		
 		CGPROGRAM
 		#pragma vertex vert
