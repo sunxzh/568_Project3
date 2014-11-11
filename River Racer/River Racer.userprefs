@@ -1,12 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\RiverTool\waterShader.shader">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Boat.cs">
     <Files>
-      <File FileName="Assets\Scripts\Boat.cs" Line="112" Column="1" />
-      <File FileName="Assets\Boat Controller\Scripts\BoatController.cs" Line="162" Column="1" />
-      <File FileName="Assets\RiverTool\TextureAnimator.cs" Line="55" Column="1" />
-      <File FileName="Assets\RiverTool\VertexColor.shader" Line="41" Column="1" />
-      <File FileName="Assets\RiverTool\waterShader.shader" Line="35" Column="4" />
+      <File FileName="Assets\Scripts\Boat.cs" Line="92" Column="45" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

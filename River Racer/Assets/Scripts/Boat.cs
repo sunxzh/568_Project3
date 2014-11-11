@@ -88,7 +88,9 @@ public class Boat : MonoBehaviour {
 		}
 
 
-		rigidbody.AddTorque(transform.up*rudderSensivity*steer * 5.0f * CurrVel/maxVel);	
+		//rigidbody.AddTorque(transform.up*rudderSensivity*steer * 5.0f * CurrVel/maxVel);	
+		transform.Rotate(transform.up* steer * 0.3f);
+
 
 		if(drift&&steer>0.1f)
 		{

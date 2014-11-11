@@ -39,10 +39,10 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>G:/unity3d/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>F:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>G:/unity3d/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>F:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
@@ -57,10 +57,10 @@
      <None Include="Assets\Standard Assets\Water (Pro Only)\Sources\Shaders\FX-Water.shader" />
      <None Include="Assets\RiverTool\VertexColor.shader" />
  <Reference Include="RiverTools">
- <HintPath>G:/unity3d/workstation/568_Project3/River Racer/Assets/RiverTool/RiverTools.dll</HintPath>
+ <HintPath>D:/Graduate/second-year-first-semester/CIS-568/HW3/568_Project3/River Racer/Assets/RiverTool/RiverTools.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.Graphs">
- <HintPath>G:/unity3d/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
+ <HintPath>F:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
