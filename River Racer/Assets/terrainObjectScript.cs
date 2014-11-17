@@ -3,6 +3,8 @@ using System.Collections;
 
 public class terrainObjectScript : MonoBehaviour {
 
+	private float time = 0;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -14,6 +16,5 @@ public class terrainObjectScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
 	}
 }

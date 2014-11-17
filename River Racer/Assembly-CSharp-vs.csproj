@@ -53,6 +53,7 @@
      <Compile Include="Assets\RiverTool\IRiverTool.cs" />
      <Compile Include="Assets\RiverTool\TextureAnimator.cs" />
      <Compile Include="Assets\Scripts\Boat.cs" />
+     <Compile Include="Assets\boatScript.cs" />
      <Compile Include="Assets\riverScript.cs" />
      <Compile Include="Assets\terrainObjectScript.cs" />
      <None Include="Assets\Boat Controller\ReadMe!.txt" />
