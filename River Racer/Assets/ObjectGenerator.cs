@@ -39,12 +39,12 @@ public class ObjectGenerator : MonoBehaviour {
 		int xcount = (int)(Mathf.Abs(maxx - minx) / stepx);
 		int zcount = (int)(Mathf.Abs(maxz - minz) / stepz);
 		
-		for (int i = 0; i < objectSizes.Length; i++) {
-			Debug.Log(objectSizes[i].x);
-			Debug.Log(objectSizes[i].z);
-		}
-		Debug.Log(xcount);
-		Debug.Log(zcount);
+//		for (int i = 0; i < objectSizes.Length; i++) {
+//			Debug.Log(objectSizes[i].x);
+//			Debug.Log(objectSizes[i].z);
+//		}
+//		Debug.Log(xcount);
+//		Debug.Log(zcount);
 		
 		// Generate objects
 		for (int i = 0; i < xcount; i++) {

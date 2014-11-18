@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Boat : MonoBehaviour {
 	//Rewrite most parts
@@ -15,8 +16,27 @@ public class Boat : MonoBehaviour {
 	public float Acc = 1.5f;
 
 	public bool drift = false;
+	public GameObject BoatBody;
+	private bool blink;
+	private float blinks;
+	private float blinkp;
+	private double INVtimer = 0.0;
 
 	private float rpmPitch = 0.0f;
+	private List<Vector3> agopos = new List<Vector3>();
+	private List<Quaternion> agorot= new List<Quaternion>();
+	private float time = 0.0f;
+
+	//boat blink
+	void Blink()
+	{
+		if (Time.time > INVtimer)
+		{			
+			INVtimer = Time.time + 0.2;
+			bool onoff = BoatBody.renderer.enabled;
+			BoatBody.renderer.enabled = !onoff;			
+		}		
+	} 
 
 	void Start () {
 		//Setup rigidbody
@@ -35,16 +55,42 @@ public class Boat : MonoBehaviour {
 
 		//Added
 		mainC = Camera.main;
-		Vector3 campos = transform.rotation * (new Vector3(0.0f, 10.0f, -25.0f)) + transform.position;
+		Vector3 campos = transform.rotation * (new Vector3(0.0f, 15.0f, -35.0f)) + transform.position;
 		mainC.transform.position = campos;
 		mainC.transform.rotation = transform.rotation;
 
 		rudderSensivity = 45;
+		blink = false;
+		blinks = 0.0f;
+		blinkp = 1.0f;
 	}
 	
 	// Update is called once per frame
 	void  FixedUpdate (){
-		Vector3 campos = transform.rotation * (new Vector3(0.0f,10.0f, -25.0f)) + transform.position;
+		time += Time.deltaTime;
+		if(time>1.0f)
+		{
+			time = 0.0f;
+			agopos.Add(transform.position);
+			agorot.Add(transform.rotation);
+			if(agopos.Count > 5)
+				agopos.RemoveAt(0);
+			if(agorot.Count > 5)
+				agorot.RemoveAt(0);
+		}
+
+		//if push back blink 
+		if(blink)
+		{
+			blinks += Time.deltaTime;
+			if(blinks<blinkp)
+				Blink();
+			else
+				blink = false;
+		}
+
+
+		Vector3 campos = transform.rotation * (new Vector3(0.0f,15.0f, -35.0f)) + transform.position;
 		mainC.transform.position = campos;
 		mainC.transform.rotation = transform.rotation;
 
@@ -110,4 +156,16 @@ public class Boat : MonoBehaviour {
 		audio.pitch = 0.3f + 0.7f * rpmPitch;
 		audio.pitch = Mathf.Clamp(audio.pitch,0.0f,1.0f);
 	}
+
+	void OnTriggerExit(Collider collider){
+	    transform.position = agopos[0];
+		transform.rotation = agorot[0];
+		engineSpume.particleEmitter.emit = false;
+		CurrVel = 0.0f;
+		blink = true;
+		blinks = 0.0f;
+	}
 }
+
+
+

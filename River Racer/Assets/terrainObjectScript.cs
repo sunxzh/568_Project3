@@ -11,7 +11,7 @@ public class terrainObjectScript : MonoBehaviour {
 	}
 
 	void OnCollisionStay(Collision collision){
-		Debug.LogError (collision.gameObject.name);
+		//Debug.LogError (collision.gameObject.name);
 	}
 	
 	// Update is called once per frame

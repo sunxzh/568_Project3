@@ -9,7 +9,7 @@ public class riverScript : MonoBehaviour {
 	}
 
 	void OnTriggerStay(Collider collider){
-		if(collider.gameObject.name != "Boat"){
+		if(collider.gameObject.name != "Boat"&&collider.gameObject.name != "TrickyPlane"){
 			Destroy (collider.gameObject);
 		}
 	}
