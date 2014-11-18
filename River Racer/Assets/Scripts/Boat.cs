@@ -13,7 +13,7 @@ public class Boat : MonoBehaviour {
 	public float maxVel = 30.0f;
 	public Camera mainC;
 	public float CurrVel = 0.0f;
-	public float Acc = 1.5f;
+	public float Acc = 0.1f;
 
 	public bool drift = false;
 	public GameObject BoatBody;
@@ -59,6 +59,9 @@ public class Boat : MonoBehaviour {
 		mainC.transform.position = campos;
 		mainC.transform.rotation = transform.rotation;
 
+		maxVel = 60.0f;
+		Acc = 0.3f;
+
 		rudderSensivity = 45;
 		blink = false;
 		blinks = 0.0f;
@@ -86,7 +89,10 @@ public class Boat : MonoBehaviour {
 			if(blinks<blinkp)
 				Blink();
 			else
+			{
 				blink = false;
+				BoatBody.renderer.enabled = true;		
+			}
 		}
 
 
