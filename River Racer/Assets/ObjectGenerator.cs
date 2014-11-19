@@ -59,7 +59,7 @@ public class ObjectGenerator : MonoBehaviour {
 				
 				float x = Random.Range(localminx + 0.6f * size.x, localmaxx - 0.6f * size.x);
 				float z = Random.Range(localminz + 0.7f * size.z, localmaxz - 0.7f * size.z);
-				GameObject n = (GameObject) Instantiate (objects[idx], new Vector3(x, objects[idx].transform.position.y, z), 
+				Instantiate (objects[idx], new Vector3(x, objects[idx].transform.position.y, z), 
 				             objects[idx].transform.rotation);
 			}
 		}

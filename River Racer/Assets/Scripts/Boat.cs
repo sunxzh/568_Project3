@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Boat : MonoBehaviour {
+	//player1 or player2
+	public bool isPlayer1;
+
 	//Rewrite most parts
 	public bool canControl = true;
 	public bool autoAcc = true;
@@ -54,7 +57,10 @@ public class Boat : MonoBehaviour {
 		audio.Play();
 
 		//Added
-		mainC = Camera.main;
+		if(isPlayer1)
+			mainC = GameObject.Find ("Main Camera1").camera;
+		else
+			mainC = GameObject.Find ("Main Camera2").camera;
 		Vector3 campos = transform.rotation * (new Vector3(0.0f, 15.0f, -35.0f)) + transform.position;
 		mainC.transform.position = campos;
 		mainC.transform.rotation = transform.rotation;
@@ -104,15 +110,28 @@ public class Boat : MonoBehaviour {
 		float steer = 0.0f;
 		
 		if(canControl){
-			if(Input.GetKey("w")||autoAcc)
+			//player1
+			if(isPlayer1 && Input.GetKey("w")||autoAcc)
 				motor = 1.0f;
-			if(Input.GetKey("s"))
+			if(isPlayer1 && Input.GetKey("s"))
 				motor = -1.0f;
 
-			if(Input.GetKey("d"))
+			if(isPlayer1 && Input.GetKey("d"))
 				steer = 1.0f;
 
-			if(Input.GetKey("a"))
+			if(isPlayer1 && Input.GetKey("a"))
+				steer = -1.0f;
+
+			//player2
+			if(!isPlayer1 && Input.GetKey("up")||autoAcc)
+				motor = 1.0f;
+			if(!isPlayer1 && Input.GetKey("down"))
+				motor = -1.0f;
+			
+			if(!isPlayer1 && Input.GetKey("right"))
+				steer = 1.0f;
+			
+			if(!isPlayer1 && Input.GetKey("left"))
 				steer = -1.0f;
 
 			if( Mathf.Abs(steer)>0.0f && Input.GetKey(KeyCode.LeftShift))
