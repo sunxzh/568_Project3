@@ -29,6 +29,9 @@ public class Boat : MonoBehaviour {
 	private List<Vector3> agopos = new List<Vector3>();
 	private List<Quaternion> agorot= new List<Quaternion>();
 	private float time = 0.0f;
+
+	public List<int> passedWaypoints;
+	public int rank;
 	
 	//boat blink
 	void Blink()
@@ -76,6 +79,8 @@ public class Boat : MonoBehaviour {
 		//Init pos and rot
 		agopos.Add(transform.position);
 		agorot.Add(transform.rotation);
+
+		rank=0;
 	}
 	
 	// Update is called once per frame
@@ -195,14 +200,16 @@ public class Boat : MonoBehaviour {
 	}
 	
 	void OnTriggerExit(Collider collider){
-		transform.position = agopos[0];
-		transform.rotation = agorot[0];
-		engineSpume.particleEmitter.emit = false;
-		CurrVel = 0.0f;
-		blink = true;
-		blinks = 0.0f;
-		//agopos.Clear();
-		//agorot.Clear();
+		if(collider.CompareTag("river")){
+			transform.position = agopos[0];
+			transform.rotation = agorot[0];
+			engineSpume.particleEmitter.emit = false;
+			CurrVel = 0.0f;
+			blink = true;
+			blinks = 0.0f;
+			//agopos.Clear();
+			//agorot.Clear();
+		}
 	}
 }
 
