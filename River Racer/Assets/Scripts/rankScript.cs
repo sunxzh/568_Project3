@@ -4,6 +4,7 @@ using System.Collections;
 public class rankScript : MonoBehaviour {
 	private GameObject boat1;
 	private GameObject boat2;
+	private GameObject nextWaypoint;
 
 	private Boat boatScript1;
 	private Boat boatScript2;
@@ -26,10 +27,19 @@ public class rankScript : MonoBehaviour {
 			boatScript1.rank=1;
 			boatScript2.rank=2;
 		}else{
+			int nextWaypointIndex=boatScript1.passedWaypoints.Count+1;
+			nextWaypoint=GameObject.Find(nextWaypointIndex.ToString());
+
 			Vector2 boatPos1=new Vector2(boat1.transform.position.x,boat1.transform.position.z);
 			Vector2 boatPos2=new Vector2(boat2.transform.position.x,boat2.transform.position.z);
+			Vector2 nextWayPointPos=new Vector2(nextWaypoint.transform.position.x,nextWaypoint.transform.position.z);
+			Vector2 boat1Waypoint=nextWayPointPos-boatPos1;
 			Vector2 boatVec12=boatPos2-boatPos1;
 			Vector2 boat1Forward=new Vector2(boat1.transform.forward.x,boat1.transform.forward.z);
+
+			if(Vector2.Dot(boat1Waypoint,boat1Forward)<0){
+				boatVec12*=-1;
+			}
 
 			if(Vector2.Dot(boat1Forward,boatVec12)>0){
 				boatScript1.rank=2;
