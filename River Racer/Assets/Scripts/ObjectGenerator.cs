@@ -69,7 +69,7 @@ public class ObjectGenerator : MonoBehaviour {
 		for (int i = 0; i < objects.Length; i++) {
 			GameObject obj = Instantiate(objects[i], new Vector3(0, -10, 0), new Quaternion()) as GameObject;
 			Collider collider = obj.collider;
-			Vector3 size = collider.bounds.size;
+			Vector3 size = 1.5f * collider.bounds.size;
 			sizes[i] = size;
 			if (stepx < size.x) {
 				stepx = size.x;

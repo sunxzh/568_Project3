@@ -25,7 +25,7 @@ public class riverScript : MonoBehaviour {
 	}
 
 	void OnTriggerStay(Collider collider){
-		if(collider.gameObject.tag != "boat" &&collider.gameObject.name != "TrickyPlane"){
+		if(collider.gameObject.tag == "Trees"){
 			Destroy (collider.gameObject);
 		}
 	}

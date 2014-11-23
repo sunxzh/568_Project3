@@ -39,10 +39,10 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>G:/unity3d/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>F:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>G:/unity3d/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>F:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
@@ -51,8 +51,10 @@
      <Compile Include="Assets\Editor\Water (Pro Only)\Water4\SpecularLightingEditor.cs" />
      <Compile Include="Assets\Editor\Water (Pro Only)\Water4\WaterBaseEditor.cs" />
      <Compile Include="Assets\Editor\Water (Pro Only)\Water4\WaterEditorUtility.cs" />
+     <Compile Include="Assets\External Tools\ObjectExporter\Editor\EditorObjExporter.cs" />
      <Compile Include="Assets\RiverTool\Editor\CurvePointEditor.cs" />
      <Compile Include="Assets\RiverTool\Editor\RiverToolEditor.cs" />
+     <None Include="Assets\secretAgentBoats\ToonShader\Toony-Basic.shader" />
      <None Include="Assets\Boat Controller\ReadMe!.txt" />
      <None Include="Assets\Standard Assets\Water (Pro Only)\Water4\Sources\Shaders\FX-SimpleWater4.shader" />
      <None Include="Assets\Standard Assets\DefaultResources\Particle Multiply.shader" />
@@ -65,10 +67,10 @@
      <None Include="Assets\Standard Assets\Water (Pro Only)\Water4\Sources\Shaders\FX-Water4.shader" />
      <None Include="Assets\RiverTool\VertexColor.shader" />
  <Reference Include="RiverTools">
- <HintPath>G:/unity3d/workstation/568_Project3/River Racer/Assets/RiverTool/RiverTools.dll</HintPath>
+ <HintPath>D:/Graduate/second-year-first-semester/CIS-568/HW3/568_Project3/River Racer/Assets/RiverTool/RiverTools.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.Graphs">
- <HintPath>G:/unity3d/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
+ <HintPath>F:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -78,6 +80,8 @@
       <Project>{316E980F-0BE4-B2B1-57E7-5A17B55BA3E5}</Project>      <Name>Assembly-UnityScript-firstpass</Name>    </ProjectReference>
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{62880FEB-39D9-1C95-90CB-BF21934BECB8}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
+    <ProjectReference Include="Assembly-UnityScript.unityproj">
+      <Project>{85030694-DA6F-8D54-3B8B-622301953464}</Project>      <Name>Assembly-UnityScript</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

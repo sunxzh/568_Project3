@@ -32,7 +32,19 @@ public class Boat : MonoBehaviour {
 
 	public List<int> passedWaypoints;
 	public int rank;
-	
+
+	private bool OnRiver;
+
+	//Init State
+	private Vector3 InitPos;
+
+
+	//Generate Random Item
+	public void RandomItem()
+	{
+
+	}
+
 	//boat blink
 	void Blink()
 	{
@@ -64,7 +76,7 @@ public class Boat : MonoBehaviour {
 			mainC = GameObject.Find ("Main Camera1").camera;
 		else
 			mainC = GameObject.Find ("Main Camera2").camera;
-		Vector3 campos = transform.rotation * (new Vector3(0.0f, 15.0f, -35.0f)) + transform.position;
+		Vector3 campos = transform.rotation * (new Vector3(0.0f, 15.0f, 35.0f)) + transform.position;
 		mainC.transform.position = campos;
 		mainC.transform.rotation = transform.rotation;
 		
@@ -81,6 +93,9 @@ public class Boat : MonoBehaviour {
 		agorot.Add(transform.rotation);
 
 		rank=0;
+		OnRiver = true;
+
+		InitPos = transform.position;
 	}
 	
 	// Update is called once per frame
@@ -110,11 +125,13 @@ public class Boat : MonoBehaviour {
 			}
 		}
 		
-		
-		Vector3 campos = transform.rotation * (new Vector3(0.0f,15.0f, -35.0f)) + transform.position;
-		mainC.transform.position = campos;
 		mainC.transform.rotation = transform.rotation;
-		
+		mainC.transform.Rotate(new Vector3(30.0f,180.0f,0.0f));
+
+		Vector3 campos = mainC.transform.rotation * (new Vector3(0.0f,10.0f, -35.0f)) + transform.position;
+		mainC.transform.position = campos;
+
+
 		float motor = 0.0f;
 		float steer = 0.0f;
 		
@@ -159,8 +176,21 @@ public class Boat : MonoBehaviour {
 			CurrVel -= 2.0f * Acc;
 		
 		CurrVel = Mathf.Clamp(CurrVel,0.0f,maxVel);
-		rigidbody.velocity = transform.forward * CurrVel;
-		
+
+
+		//if(OnRiver)
+		//{
+		    rigidbody.velocity = -transform.forward * CurrVel;
+		//}
+//	    else 
+//		{
+//			if(OnBorderR)
+//			   rigidbody.velocity = (-transform.forward + 2.0f * transform.right)/3.0f * CurrVel;
+//			else if(OnBorderL)
+//				rigidbody.velocity = (-transform.forward - 2.0f * transform.right)/3.0f * CurrVel;
+//		}
+
+
 		//Added to avoid weird rotating
 		if(rigidbody.angularVelocity.magnitude < 0.5f)
 			rigidbody.angularVelocity = new Vector3(0.0f,0.0f,0.0f);
@@ -175,8 +205,7 @@ public class Boat : MonoBehaviour {
 			engineSpume.particleEmitter.Emit();				
 		}
 		
-		
-		//rigidbody.AddTorque(transform.up*rudderSensivity*steer * 5.0f * CurrVel/maxVel);	
+
 		transform.Rotate(transform.up* steer * 0.3f);
 		
 		
@@ -201,16 +230,17 @@ public class Boat : MonoBehaviour {
 	
 	void OnTriggerExit(Collider collider){
 		if(collider.CompareTag("river")){
-			transform.position = agopos[0];
-			transform.rotation = agorot[0];
 			engineSpume.particleEmitter.emit = false;
-			CurrVel = 0.0f;
-			blink = true;
-			blinks = 0.0f;
-			//agopos.Clear();
-			//agorot.Clear();
+			OnRiver = false;
 		}
 	}
+
+	void OnTriggerStay(Collider collider){
+		if(collider.CompareTag("river")){
+			OnRiver = true;
+		}
+	}
+
 }
 
 
