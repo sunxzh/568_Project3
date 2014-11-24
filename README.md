@@ -4,6 +4,3 @@
 568 Final Project
 
 
-Web Page
--------------------------------------------------------------------------------
-http://wulinjiansheng.github.io/568_Project3/
