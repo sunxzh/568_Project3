@@ -7,7 +7,7 @@ public class Boat : MonoBehaviour {
 	public bool isPlayer1;
 	
 	//Rewrite most parts
-	public bool canControl = true;
+	public bool canControl = false;
 	public bool autoAcc = true;
 	public AudioClip engineSound;
 	public Transform engineSpume;
@@ -38,6 +38,13 @@ public class Boat : MonoBehaviour {
 	//Init State
 	private Vector3 InitPos;
 
+	public bool start;
+	public bool end;
+
+	public float usedTime;
+
+	private GameObject global;
+	private GuiScript guiScript;
 
 	//Generate Random Item
 	public void RandomItem()
@@ -96,10 +103,22 @@ public class Boat : MonoBehaviour {
 		OnRiver = true;
 
 		InitPos = transform.position;
+
+		start=false;
+		end=false;
+
+		usedTime=0.0f;
+
+		global=GameObject.Find("Global");
+		guiScript=global.GetComponent<GuiScript>();
 	}
-	
+
+	void Update(){
+		canControl=start;
+	}
+
 	// Update is called once per frame
-	void  FixedUpdate (){
+	void FixedUpdate (){
 		time += Time.deltaTime;
 		if(time>1.0f)
 		{
@@ -238,6 +257,15 @@ public class Boat : MonoBehaviour {
 	void OnTriggerStay(Collider collider){
 		if(collider.CompareTag("river")){
 			OnRiver = true;
+		}
+	}
+
+	void OnTriggerEnter(Collider collider){
+		if(collider.CompareTag("FinishLine")){
+			end=true;
+			start=false;
+			usedTime=guiScript.elapsedTime;
+			Debug.Log(usedTime);
 		}
 	}
 
