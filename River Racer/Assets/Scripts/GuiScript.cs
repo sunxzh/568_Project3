@@ -10,6 +10,9 @@ public class GuiScript : MonoBehaviour {
 	
 	private GameObject boat1;
 	private GameObject boat2;
+	private GameObject CPU1;
+	private GameObject CPU2;
+	private GameObject CPU3;
 	
 	private Boat boatScript1;
 	private Boat boatScript2;
@@ -27,6 +30,9 @@ public class GuiScript : MonoBehaviour {
 	void Start () {
 		boat1=GameObject.Find("Boat1");
 		boat2=GameObject.Find("Boat2");
+		CPU1 = GameObject.Find ("CPU1");
+		CPU2 = GameObject.Find ("CPU2");
+		CPU3 = GameObject.Find ("CPU3");
 		
 		boatScript1=boat1.GetComponent<Boat>();
 		boatScript2=boat2.GetComponent<Boat>();
@@ -82,6 +88,9 @@ public class GuiScript : MonoBehaviour {
 				countdownText="";
 				boatScript1.start=true;
 				boatScript2.start=true;
+				CPU1.GetComponent<SplineController>().FollowSpline();
+				CPU2.GetComponent<SplineController>().FollowSpline();
+				CPU3.GetComponent<SplineController>().FollowSpline();
 			}
 		}else{
 			elapsedTime +=Time.deltaTime;
