@@ -49,13 +49,17 @@
      <Compile Include="Assets\Standard Assets\Scripts\Camera Scripts\MouseOrbit.js" />
      <None Include="Assets\secretAgentBoats\ToonShader\Toony-Basic.shader" />
      <None Include="Assets\Boat Controller\ReadMe!.txt" />
+     <None Include="Assets\ToonFlowerPlant\Shader\Unlit-AlphaTest.shader" />
      <None Include="Assets\Standard Assets\Water (Pro Only)\Water4\Sources\Shaders\FX-SimpleWater4.shader" />
+     <None Include="Assets\Items\Materials\TransparentReflective.shader" />
      <None Include="Assets\Standard Assets\DefaultResources\Particle Multiply.shader" />
      <None Include="Assets\Standard Assets\Skyboxes\_skybox info.txt" />
+     <None Include="Assets\Items\Materials\Glass.shader" />
      <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-Lighted.shader" />
      <None Include="Assets\RiverTool\waterShader.shader" />
      <None Include="Assets\Standard Assets\DefaultResources\Particle AddSmooth.shader" />
      <None Include="Assets\Standard Assets\Water (Pro Only)\Sources\Shaders\FX-Water.shader" />
+     <None Include="Assets\ToonFlowerPlant\Shader\Unlit-Alpha.shader" />
      <None Include="Assets\Standard Assets\Water (Pro Only)\Water4\Sources\Shaders\WaterInclude.cginc" />
      <None Include="Assets\Standard Assets\Water (Pro Only)\Water4\Sources\Shaders\FX-Water4.shader" />
      <None Include="Assets\RiverTool\VertexColor.shader" />

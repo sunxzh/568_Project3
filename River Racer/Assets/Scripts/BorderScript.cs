@@ -13,6 +13,16 @@ public class BorderScript : MonoBehaviour {
 	
 	}
 
+
+
+	void OnCollisionEnter(Collision collision){
+		Collider collider = collision.collider; 
+		if(collider.gameObject.tag == "Trees"||collider.gameObject.tag == "Rocks"){
+			Destroy (collider.gameObject);
+		}
+	}
+
+
 	void OnCollisionStay(Collision collision){
 		Collider collider = collision.collider; 
 		if(collider.gameObject.tag == "Trees"||collider.gameObject.tag == "Rocks"){
@@ -20,9 +30,4 @@ public class BorderScript : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerStay(Collider collider){
-		if(collider.gameObject.tag == "Trees"||collider.gameObject.tag == "Rocks"){
-			Destroy (collider.gameObject);
-		}
-	}
 }

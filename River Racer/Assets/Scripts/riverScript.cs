@@ -15,7 +15,7 @@ public class riverScript : MonoBehaviour {
 			int rndIndex = Random.Range (0,vertices.Length-1);
 			Vector3 pos1 = transform.TransformPoint(vertices[rndIndex]);
 			Vector3 pos2 = transform.TransformPoint(vertices[rndIndex+1]);
-			float rndInterp = Random.Range (0f,1f);
+			float rndInterp = Random.Range (0.2f,0.8f);
 			Vector3 obstaclePos = (pos2-pos1)*rndInterp + pos1;
 			int rndObstacleIdx = Random.Range (0,obstacles.Length);
 			GameObject obs = (GameObject) Instantiate (obstacles[rndObstacleIdx], obstaclePos, Quaternion.identity);

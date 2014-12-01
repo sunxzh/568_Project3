@@ -41,9 +41,12 @@ public class RealBoxScript : MonoBehaviour {
 			Destroy(temp,1.0f);
 			Destroy(gameObject);
 		}
-		else
+		else 
 		{
-			Destroy(collider.gameObject);
+			if(collider.tag == "Borders")
+				Destroy(gameObject);
+			else
+			    Destroy(collider.gameObject);
 		}
 	}
 }

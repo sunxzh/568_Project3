@@ -11,15 +11,23 @@ public class Boat : MonoBehaviour {
 	public bool autoAcc = true;
 	public AudioClip engineSound;
 	public Transform engineSpume;
+
 	public float mass = 100.0f;
 	public int rudderSensivity = 45;
 	public float maxVel = 30.0f;
+	public float maxVel_copy = 30.0f;
 	public Camera mainC;
 	public float CurrVel = 0.0f;
 	public float Acc = 0.1f;
-	
+	public float Acc_copy = 0.1f;
+
+	float motor = 0.0f;
+	float steer = 0.0f;
+	float reverse = 1.0f;
+	float slippery = 1.0f;
+
 	public bool drift = false;
-	public GameObject BoatBody;
+	public GameObject SphereBody;
 	private bool blink;
 	private float blinks;
 	private float blinkp;
@@ -33,16 +41,182 @@ public class Boat : MonoBehaviour {
 	public List<int> passedWaypoints;
 	public int rank;
 
-	private bool OnRiver;
-
 	//Init State
 	private Vector3 InitPos;
 
+	//terms for timing
+	public bool start;
+	public bool end;
+	
+	public float usedTime;
+	
+	private GameObject global;
+	private GuiScript guiScript;
 
-	//Generate Random Item
+	//effect on each other
+	private Boat boatScript1;
+	private Boat boatScript2;
+	private GameObject boat1;
+	private GameObject boat2;
+
+	//List to store items
+	public GameObject[] Items;
+	public List<int> itemnums; //item players collect,3 at most
+	public List<float> itemstarttimes; //items start time
+	public List<float> itemtimes; //items last time
+	private bool shield;
+
+	//Get Random Item
 	public void RandomItem()
 	{
+		itemnums.Add(Random.Range(0,1000)%6);
+		if(itemnums.Count > 3)
+			itemnums.RemoveAt(0);
+	}
 
+	//Item effect
+	public void ItemEffect(int itemid)
+	{
+		//0 boost;
+		if(itemid == 0 || Items[0].GetComponent<JetScript>().onoff)
+		{
+			int tempid = 0;
+			Items[tempid].GetComponent<JetScript>().onoff = true;
+
+			//Add acc and max vel
+			Acc = 1.5f * Acc_copy;
+			maxVel = 1.5f * maxVel_copy;
+
+			itemstarttimes[tempid] += Time.deltaTime;
+
+			if(itemstarttimes[tempid]>itemtimes[tempid])
+			{
+				Acc = Acc_copy;
+				maxVel = maxVel_copy;
+				itemstarttimes[tempid] = 0.0f;
+				Items[tempid].GetComponent<JetScript>().onoff = false;
+			}
+		}
+
+		//1 reverse control
+		if(itemid == 1 || Items[1].GetComponent<StarScript>().onoff)
+		{
+			int tempid = 1;
+			Items[tempid].GetComponent<StarScript>().onoff = true;
+			
+			//Reverse control
+			reverse = -1.0f;
+			if(shield)
+			{
+				itemstarttimes[tempid] = itemtimes[tempid];
+				shield = false;
+			}
+			
+			itemstarttimes[tempid] += Time.deltaTime;
+			if(itemstarttimes[tempid]>itemtimes[tempid])
+			{
+				reverse = 1.0f;
+				itemstarttimes[tempid] = 0.0f;
+				Items[tempid].GetComponent<StarScript>().onoff = false;
+			}
+		}
+
+		//2 UFO
+		if(itemid == 2 || Items[2].GetComponent<UFOScript>().onoff)
+		{
+			int tempid = 2;
+			Items[tempid].GetComponent<UFOScript>().onoff = true;
+			
+			//UFO make u slower
+			Acc = 0.5f * Acc_copy;
+			maxVel = 0.5f * maxVel_copy;
+
+			if(shield)
+			{
+				itemstarttimes[tempid] = itemtimes[tempid];
+				shield = false;
+			}
+			
+			itemstarttimes[tempid] += Time.deltaTime;
+			if(itemstarttimes[tempid]>itemtimes[tempid])
+			{
+				Acc = Acc_copy;
+				maxVel = maxVel_copy;
+				itemstarttimes[tempid] = 0.0f;
+				Items[tempid].GetComponent<UFOScript>().onoff = false;
+			}
+		}
+
+
+		//3 Shield
+		if(itemid == 3 || Items[3].GetComponent<ShieldScript>().onoff)
+		{
+			int tempid = 3;
+			Items[tempid].GetComponent<ShieldScript>().onoff = true;
+			
+			//shield works one time
+			if(itemstarttimes[tempid]<0.01f)
+				shield = true;
+			
+			itemstarttimes[tempid] += Time.deltaTime;
+			if(itemstarttimes[tempid]>itemtimes[tempid]||shield == false)
+			{
+				itemstarttimes[tempid] = 0.0f;
+				Items[tempid].GetComponent<ShieldScript>().onoff = false;
+			}
+		}
+
+		//4 WaterMine generate a water mine after the boat
+		if(itemid == 4)
+		{
+
+			GameObject temp = (GameObject)Instantiate(Items[itemid],transform.position + 8.0f * transform.forward,transform.rotation);
+			temp.rigidbody.velocity = 0.3f * rigidbody.velocity  + transform.right * Random.Range(-15, 15);
+		}
+
+		//If hit mine, trace back to the pos 5 seconds ago
+		if(itemid == 6)
+		{
+			if(shield)
+				shield = false;
+			else
+			{
+				transform.position = agopos[0];
+				transform.rotation = agorot[0];
+				engineSpume.particleEmitter.emit = false;
+				CurrVel = 0.0f;
+				blink = true;
+				blinks = 0.0f;
+			}
+		}
+
+		//5 Oilbarrel generate a Oilbarrel after the boat
+		if(itemid == 5)
+		{
+			GameObject temp = (GameObject)Instantiate(Items[itemid],transform.position + 8.0f * transform.forward,transform.rotation* Quaternion.Euler(new Vector3(0.0f,90.0f, 0.0f)));
+			temp.rigidbody.velocity = 0.4f * rigidbody.velocity + transform.right * Random.Range(-15, 15);
+		}
+
+		//If hit Oilbarrel, become slippery
+		if(itemid == 7 || itemstarttimes[5]!=0.0f)
+		{
+			int tempid = 5;
+		    //mine makes u slippery
+			slippery = 50.0f;
+
+			if(shield)
+			{
+				itemstarttimes[tempid] = itemtimes[tempid];
+				shield = false;
+			}
+
+			itemstarttimes[tempid] += Time.deltaTime;
+			if(itemstarttimes[tempid]>itemtimes[tempid])
+			{
+				slippery = 1.0f;
+				itemstarttimes[tempid] = 0.0f;
+			}
+		}
 	}
 
 	//boat blink
@@ -51,12 +225,19 @@ public class Boat : MonoBehaviour {
 		if (Time.time > INVtimer)
 		{			
 			INVtimer = Time.time + 0.2;
-			bool onoff = BoatBody.renderer.enabled;
-			BoatBody.renderer.enabled = !onoff;			
+			bool onoff = SphereBody.renderer.enabled;
+			SphereBody.renderer.enabled = !onoff;			
 		}		
 	} 
 	
 	void Start () {
+
+		boat1=GameObject.Find("Boat1");
+		boat2=GameObject.Find("Boat2");
+		
+		boatScript1=boat1.GetComponent<Boat>();
+		boatScript2=boat2.GetComponent<Boat>();
+
 		//Setup rigidbody
 		Physics.gravity = new Vector3(0.0f,0.0f,0.0f);
 		rigidbody.mass = mass;
@@ -68,6 +249,7 @@ public class Boat : MonoBehaviour {
 			gameObject.AddComponent<AudioSource>();
 		}
 		audio.clip = engineSound;
+		audio.volume = 0.5f;
 		audio.loop = true;
 		audio.Play();
 		
@@ -81,25 +263,52 @@ public class Boat : MonoBehaviour {
 		mainC.transform.rotation = transform.rotation;
 		
 		maxVel = 60.0f;
+		maxVel_copy = maxVel;
 		Acc = 0.3f;
-		
+		Acc_copy = Acc;
+
 		rudderSensivity = 45;
 		blink = false;
 		blinks = 0.0f;
-		blinkp = 1.0f;
+		blinkp = 4.0f;
 		
 		//Init pos and rot
 		agopos.Add(transform.position);
 		agorot.Add(transform.rotation);
 
 		rank=0;
-		OnRiver = true;
-
 		InitPos = transform.position;
+
+
+		for(int i=0;i<6;i++)
+			itemstarttimes.Add(0.0f);
+
+		float timescale = 1.5f;
+		itemtimes.Add(6.0f*timescale);  //jet time 6s
+		itemtimes.Add(5.0f*timescale);  //dizzy time 5s
+		itemtimes.Add(Items[2].GetComponent<UFOScript>().animlength*timescale);  //UFO time
+		itemtimes.Add(5.0f*timescale);  //shield time 5s
+		itemtimes.Add(0.0f*timescale);  //mine time 0s
+		itemtimes.Add(5.0f*timescale);  //oil time 5s
+
+
+		//timing stuff
+		start=false;
+		end=false;
+		usedTime=0.0f;
+		global=GameObject.Find("Global");
+		guiScript=global.GetComponent<GuiScript>();
 	}
-	
+
+
+	void Update(){
+		canControl=start;
+		ItemEffect(-1);
+	}
+
 	// Update is called once per frame
 	void  FixedUpdate (){
+
 		time += Time.deltaTime;
 		if(time>1.0f)
 		{
@@ -120,8 +329,9 @@ public class Boat : MonoBehaviour {
 				Blink();
 			else
 			{
+				blinks = 0.0f;
 				blink = false;
-				BoatBody.renderer.enabled = true;		
+				SphereBody.renderer.enabled = false;		
 			}
 		}
 		
@@ -132,63 +342,87 @@ public class Boat : MonoBehaviour {
 		mainC.transform.position = campos;
 
 
-		float motor = 0.0f;
-		float steer = 0.0f;
-		
-		if(canControl){
-			//player1
-			if(isPlayer1 && Input.GetKey("w")||autoAcc)
-				motor = 1.0f;
-			if(isPlayer1 && Input.GetKey("s"))
-				motor = -1.0f;
+		motor = 0.0f;
+		steer = 0.0f;
 
-			if(isPlayer1 && Input.GetKey("d"))
+		//player1
+		if(canControl && isPlayer1)
+		{
+			if(Input.GetKey("w")||autoAcc)
+				motor = 1.0f;
+			if(Input.GetKey("s"))
+				motor = -1.0f;
+			
+			if(Input.GetKey("d"))
 				steer = 1.0f;
 			
-			if(isPlayer1 && Input.GetKey("a"))
-				steer = -1.0f;
-
-			//player2
-			if(!isPlayer1 && Input.GetKey("up")||autoAcc)
-				motor = 1.0f;
-			if(!isPlayer1 && Input.GetKey("down"))
-				motor = -1.0f;
-	
-			if(!isPlayer1 && Input.GetKey("right"))
-				steer = 1.0f;
-			
-			if(!isPlayer1 && Input.GetKey("left"))
+			if(Input.GetKey("a"))
 				steer = -1.0f;
 			
 			if( Mathf.Abs(steer)>0.0f && Input.GetKey(KeyCode.LeftShift))
 				drift = true;
 			else
 				drift = false;
-					
+
+			if(itemnums.Count>0 && Input.GetKeyDown(KeyCode.LeftControl))
+			{
+				int tempnum = itemnums[0];
+				if(tempnum == 1 || tempnum == 2)
+					boatScript2.ItemEffect(tempnum);
+				else 
+					ItemEffect(tempnum);
+
+				itemnums.RemoveAt(0);
+			}
 		}
 
-		if(canControl && isPlayer1 && Input.GetKey("s"))
-			motor = -1.0f;
+
+		//player2
+		if(canControl && !isPlayer1){
+			if(Input.GetKey("up")||autoAcc)
+				motor = 1.0f;
+			if(Input.GetKey("down"))
+				motor = -1.0f;
+			
+			if(Input.GetKey("right"))
+				steer = 1.0f;
+			
+			if(Input.GetKey("left"))
+				steer = -1.0f;
+			
+			if( Mathf.Abs(steer)>0.0f && Input.GetKey(KeyCode.RightShift))
+				drift = true;
+			else
+				drift = false;	
+			
+			if(itemnums.Count>0 && Input.GetKeyDown(KeyCode.RightControl))
+			{
+				int tempnum = itemnums[0];
+				if(tempnum == 1 || tempnum == 2)
+				{
+					boatScript1.ItemEffect(tempnum);
+				}
+				else 
+					ItemEffect(tempnum);
+				
+				itemnums.RemoveAt(0);
+			}
+		}
+
+		//Add for reserve
+		motor *= reverse;
+		steer *= reverse;
+		steer *= slippery;
 
 		if(motor>0.0)
 			CurrVel += Acc;
-		else
-			CurrVel -= 2.0f * Acc;
+		else 
+			CurrVel -= 1.5f * Acc;
 		
 		CurrVel = Mathf.Clamp(CurrVel,0.0f,maxVel);
 
 
-		//if(OnRiver)
-		//{
-		    rigidbody.velocity = -transform.forward * CurrVel;
-		//}
-//	    else 
-//		{
-//			if(OnBorderR)
-//			   rigidbody.velocity = (-transform.forward + 2.0f * transform.right)/3.0f * CurrVel;
-//			else if(OnBorderL)
-//				rigidbody.velocity = (-transform.forward - 2.0f * transform.right)/3.0f * CurrVel;
-//		}
+		rigidbody.velocity = -transform.forward * CurrVel;
 
 
 		//Added to avoid weird rotating
@@ -212,12 +446,14 @@ public class Boat : MonoBehaviour {
 		if(drift&&steer>0.1f)
 		{
 			transform.Rotate(transform.up* 1.0f);
-			CurrVel = maxVel/6.0f;
+			CurrVel = CurrVel * 0.98f;
+			CurrVel = Mathf.Max(CurrVel,0.1f*maxVel);
 		}
 		else if(drift&&steer<-0.1f)
 		{
 			transform.Rotate(-transform.up* 1.0f);
-			CurrVel = maxVel/6.0f;
+			CurrVel = CurrVel * 0.98f;
+			CurrVel = Mathf.Max(CurrVel,0.1f*maxVel);
 		}
 		
 		audio.volume = 0.3f + 0.7f * CurrVel/maxVel;
@@ -227,20 +463,48 @@ public class Boat : MonoBehaviour {
 		audio.pitch = 0.3f + 0.7f * rpmPitch;
 		audio.pitch = Mathf.Clamp(audio.pitch,0.0f,1.0f);
 	}
-	
-	void OnTriggerExit(Collider collider){
-		if(collider.CompareTag("river")){
-			engineSpume.particleEmitter.emit = false;
-			OnRiver = false;
+
+	void OnCollisionStay(Collision collision){
+		Collider collider = collision.collider; 
+		if(collider.CompareTag("Borders")){
+			CurrVel *= 0.98f; //slow down if collide with borders
+			CurrVel = Mathf.Min(0.7f* maxVel,CurrVel); //if collide with borders, maxvel is lower
 		}
 	}
 
-	void OnTriggerStay(Collider collider){
-		if(collider.CompareTag("river")){
-			OnRiver = true;
+	void OnCollisionEnter(Collision collision){
+		Collider collider = collision.collider; 
+		if(collider.CompareTag("Rocks")){
+			if(!shield)
+			   CurrVel *= 0.3f;
+			else
+				shield = false; 
+		}
+
+		if(collider.CompareTag("Borders")){
+			CurrVel *= 0.9f;
+		}
+
+		if(collider.CompareTag("OilBarrels")){
+			collider.GetComponent<OilScript>().onoff = true;
+			ItemEffect(7);
+		}
+
+		if(collider.CompareTag("Mines")){
+			collider.GetComponent<MineScript>().onoff = true;
+			ItemEffect(6);
 		}
 	}
 
+
+	void OnTriggerEnter(Collider collider){
+		if(collider.CompareTag("FinishLine")){
+			end=true;
+			start=false;
+			usedTime=guiScript.elapsedTime;
+			Debug.Log(usedTime);
+		}
+	}
 }
 
 

@@ -24,7 +24,7 @@ public class ItemBoxAnimScript : MonoBehaviour {
 		}
 		float ym = Mathf.Pow(-1,num);
 		gameObject.transform.position = 
-			new Vector3(gameObject.transform.position.x,gameObject.transform.position.y+ym*0.05f,gameObject.transform.position.z);
+			new Vector3(gameObject.transform.position.x,gameObject.transform.position.y+ym*0.02f,gameObject.transform.position.z);
 		gameObject.transform.Rotate(new Vector3(0.0f,4.0f,0.0f));
 	}
 }
