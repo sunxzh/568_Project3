@@ -30,10 +30,7 @@ public class UFOScript : MonoBehaviour {
 		{
 			animtime += Time.deltaTime;
 			if(animtime>=animlength)
-			{
 				animtime = 0.0f;
-				onoff = !onoff;
-			}
 
 			UFO.GetComponent<MeshRenderer>().enabled = true;
 			UFO.GetComponent<Animation>()["UFOAnimation"].speed = animspeed;

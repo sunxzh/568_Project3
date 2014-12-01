@@ -108,7 +108,7 @@ public class Boat : MonoBehaviour {
 			reverse = -1.0f;
 			if(shield)
 			{
-				itemstarttimes[tempid] = itemtimes[tempid];
+				itemstarttimes[tempid] = itemtimes[tempid]+ 1.0f;
 				shield = false;
 			}
 			
@@ -133,11 +133,12 @@ public class Boat : MonoBehaviour {
 
 			if(shield)
 			{
-				itemstarttimes[tempid] = itemtimes[tempid];
+				itemstarttimes[tempid] = itemtimes[tempid] + 1.0f;
 				shield = false;
 			}
 			
 			itemstarttimes[tempid] += Time.deltaTime;
+
 			if(itemstarttimes[tempid]>itemtimes[tempid])
 			{
 				Acc = Acc_copy;
@@ -206,7 +207,7 @@ public class Boat : MonoBehaviour {
 
 			if(shield)
 			{
-				itemstarttimes[tempid] = itemtimes[tempid];
+				itemstarttimes[tempid] = itemtimes[tempid] + 1.0f;
 				shield = false;
 			}
 
@@ -286,7 +287,7 @@ public class Boat : MonoBehaviour {
 		float timescale = 1.5f;
 		itemtimes.Add(6.0f*timescale);  //jet time 6s
 		itemtimes.Add(5.0f*timescale);  //dizzy time 5s
-		itemtimes.Add(Items[2].GetComponent<UFOScript>().animlength*timescale);  //UFO time
+		itemtimes.Add(Items[2].GetComponent<UFOScript>().animlength);  //UFO time
 		itemtimes.Add(5.0f*timescale);  //shield time 5s
 		itemtimes.Add(0.0f*timescale);  //mine time 0s
 		itemtimes.Add(5.0f*timescale);  //oil time 5s
