@@ -5,6 +5,7 @@ using System.Collections.Generic;
 [ExecuteInEditMode] // Make water live-update even when not in play mode
 public class Water : MonoBehaviour
 {
+	public Material mat;
 	public enum WaterMode {
 		Simple = 0,
 		Reflective = 1,
@@ -163,14 +164,17 @@ public class Water : MonoBehaviour
         m_RefractionCameras.Clear();
 	}
 	
-	
+	// Use this for initialization
+	void Start () {
+		mat = renderer.sharedMaterial;
+	}
 	// This just sets up some matrices in the material; for really
 	// old cards to make water texture scroll.
 	void Update()
 	{
 		if( !renderer )
 			return;
-		Material mat = renderer.sharedMaterial;
+
 		if( !mat )
 			return;
 

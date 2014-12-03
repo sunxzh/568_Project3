@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections;
 
 public class BoatController : MonoBehaviour {
-	
 	public bool canControl = true;
 	//Engine sound
 	public AudioClip engineSound;

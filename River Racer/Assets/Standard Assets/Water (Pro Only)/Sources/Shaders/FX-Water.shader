@@ -76,7 +76,7 @@ v2f vert(appdata v)
 	
 	// scroll bump waves
 	float4 temp;
-	temp.xyzw = v.vertex.xzxz * _WaveScale4 / unity_Scale.w + _WaveOffset;
+	temp.xyzw = v.vertex.xzxz * 0.01f * _WaveScale4 / unity_Scale.w + _WaveOffset;// + _WaveOffset;
 	o.bumpuv0 = temp.xy;
 	o.bumpuv1 = temp.wz;
 	
@@ -122,7 +122,7 @@ half4 frag( v2f i ) : SV_Target
 	
 	#if HAS_REFLECTION
 	float4 uv1 = i.ref; uv1.xy += bump * _ReflDistort;
-	half4 refl = tex2Dproj( _ReflectionTex, UNITY_PROJ_COORD(uv1) );
+	half4 refl = 0.2f * tex2Dproj( _ReflectionTex, UNITY_PROJ_COORD(uv1) );
 	#endif
 	#if HAS_REFRACTION
 	float4 uv2 = i.ref; uv2.xy -= bump * _RefrDistort;

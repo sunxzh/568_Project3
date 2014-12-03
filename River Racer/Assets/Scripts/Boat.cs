@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Boat : MonoBehaviour {
+
+	//Add joystick control
+	public bool joysticks;
 	//player1 or player2
 	public bool isPlayer1;
 	
@@ -52,6 +55,9 @@ public class Boat : MonoBehaviour {
 	
 	private GameObject global;
 	private GuiScript guiScript;
+	//Get info from global
+	GlobalScript globalscript;
+
 
 	//effect on each other
 	private Boat boatScript1;
@@ -65,6 +71,10 @@ public class Boat : MonoBehaviour {
 	public List<float> itemstarttimes; //items start time
 	public List<float> itemtimes; //items last time
 	private bool shield;
+
+	//if collide with border, stop wavespeed
+	private bool onborder = false;
+	private float onborderlag = 0.0f;
 
 	//Get Random Item
 	public void RandomItem()
@@ -299,6 +309,7 @@ public class Boat : MonoBehaviour {
 		usedTime=0.0f;
 		global=GameObject.Find("Global");
 		guiScript=global.GetComponent<GuiScript>();
+		globalscript = global.GetComponent<GlobalScript>();
 	}
 
 
@@ -309,6 +320,35 @@ public class Boat : MonoBehaviour {
 
 	// Update is called once per frame
 	void  FixedUpdate (){
+		Vector4 wavespeed = globalscript.wavecurrspeed;
+		float wavescale = globalscript.wavecurrscale;
+		Vector2 riverspeed =  wavescale/0.05f*(new Vector2(wavespeed.x,wavespeed.y)+new Vector2(wavespeed.z ,wavespeed.w));
+
+		//Avoid huge wavespeed
+		riverspeed.x = Mathf.Clamp(riverspeed.x,-5.0f,5.0f);
+		riverspeed.y = Mathf.Clamp(riverspeed.y,-5.0f,5.0f);
+
+		Debug.Log(riverspeed);
+
+		//lag 2s to guarantee boat leave the border
+		if(onborder)
+		{
+			onborderlag+= 0.01f;
+			riverspeed = new Vector2(0.0f,0.0f);
+		}
+
+		if(onborderlag>0.0f&&onborderlag<1.0f)
+		{
+			riverspeed = new Vector2(0.0f,0.0f);
+			onborderlag+= Time.deltaTime;
+		}
+		else
+		{
+			onborder = false;
+			onborderlag = 0.0f;
+		}
+
+
 
 		time += Time.deltaTime;
 		if(time>1.0f)
@@ -345,41 +385,75 @@ public class Boat : MonoBehaviour {
 
 		motor = 0.0f;
 		steer = 0.0f;
-
+		rigidbody.velocity = new Vector3(0.0f,0.0f,0.0f);
 		//player1
 		if(canControl && isPlayer1)
 		{
-			if(Input.GetKey("w")||autoAcc)
-				motor = 1.0f;
-			if(Input.GetKey("s"))
-				motor = -1.0f;
-			
-			if(Input.GetKey("d"))
-				steer = 1.0f;
-			
-			if(Input.GetKey("a"))
-				steer = -1.0f;
-			
-			if( Mathf.Abs(steer)>0.0f && Input.GetKey(KeyCode.LeftShift))
-				drift = true;
-			else
-				drift = false;
+			//add wavespeed
+			rigidbody.velocity = new Vector3(riverspeed.x,0.0f,riverspeed.y);
 
-			if(itemnums.Count>0 && Input.GetKeyDown(KeyCode.LeftControl))
+			if(joysticks)
 			{
-				int tempnum = itemnums[0];
-				if(tempnum == 1 || tempnum == 2)
-					boatScript2.ItemEffect(tempnum);
-				else 
-					ItemEffect(tempnum);
-
-				itemnums.RemoveAt(0);
+				if(autoAcc||Input.GetAxis("Vertical")>0.0f)
+					motor = 1.0f;
+				else
+					motor = -1.0f;
+				
+				steer = Input.GetAxis("Horizontal");
+				if(Input.GetAxis("ZAxis")<0.0f)
+					drift = true;
+				else
+					drift = false;
+				
+				
+				if(itemnums.Count>0 &&Input.GetButtonDown("Fire1"))
+				{
+					int tempnum = itemnums[0];
+					if(tempnum == 1 || tempnum == 2)
+						boatScript2.ItemEffect(tempnum);
+					else 
+						ItemEffect(tempnum);
+					
+					itemnums.RemoveAt(0);
+				}
+			}
+			else
+			{
+				if(Input.GetKey("w")||autoAcc)
+					motor = 1.0f;
+				if(Input.GetKey("s"))
+					motor = -1.0f;
+				
+				if(Input.GetKey("d"))
+					steer = 1.0f;
+				
+				if(Input.GetKey("a"))
+					steer = -1.0f;
+				
+				if( Mathf.Abs(steer)>0.0f && Input.GetKey(KeyCode.LeftShift))
+					drift = true;
+				else
+					drift = false;
+				
+				if(itemnums.Count>0 && Input.GetKeyDown(KeyCode.LeftControl))
+				{
+					int tempnum = itemnums[0];
+					if(tempnum == 1 || tempnum == 2)
+						boatScript2.ItemEffect(tempnum);
+					else 
+						ItemEffect(tempnum);
+					
+					itemnums.RemoveAt(0);
+				}
 			}
 		}
 
 
 		//player2
 		if(canControl && !isPlayer1){
+			//add wavespeed
+			rigidbody.velocity = - new Vector3(riverspeed.y,0.0f,riverspeed.x);
+
 			if(Input.GetKey("up")||autoAcc)
 				motor = 1.0f;
 			if(Input.GetKey("down"))
@@ -423,7 +497,8 @@ public class Boat : MonoBehaviour {
 		CurrVel = Mathf.Clamp(CurrVel,0.0f,maxVel);
 
 
-		rigidbody.velocity = -transform.forward * CurrVel;
+		rigidbody.velocity += -transform.forward * CurrVel;
+
 
 
 		//Added to avoid weird rotating
@@ -465,9 +540,17 @@ public class Boat : MonoBehaviour {
 		audio.pitch = Mathf.Clamp(audio.pitch,0.0f,1.0f);
 	}
 
+	void OnCollisionExit(Collision collision)
+	{
+		if(collider.CompareTag("Borders")){
+			onborder = false;
+		}
+	}
+
 	void OnCollisionStay(Collision collision){
 		Collider collider = collision.collider; 
 		if(collider.CompareTag("Borders")){
+			onborder = true;
 			CurrVel *= 0.98f; //slow down if collide with borders
 			CurrVel = Mathf.Min(0.7f* maxVel,CurrVel); //if collide with borders, maxvel is lower
 		}
@@ -483,6 +566,7 @@ public class Boat : MonoBehaviour {
 		}
 
 		if(collider.CompareTag("Borders")){
+			onborder = true;
 			CurrVel *= 0.9f;
 		}
 
