@@ -17,7 +17,7 @@ public class Boat : MonoBehaviour {
 
 	public float mass = 100.0f;
 	public int rudderSensivity = 45;
-	public float maxVel = 30.0f;
+	public float maxVel = 40.0f;
 	public float maxVel_copy = 30.0f;
 	public Camera mainC;
 	public float CurrVel = 0.0f;
@@ -76,10 +76,13 @@ public class Boat : MonoBehaviour {
 	private bool onborder = false;
 	private float onborderlag = 0.0f;
 
+	public int selectedIndex;
+
 	//Get Random Item
 	public void RandomItem()
 	{
-		itemnums.Add(Random.Range(0,1000)%6);
+		int itemid=Random.Range(0,1000)%6;
+		itemnums.Add(itemid);
 		if(itemnums.Count > 3)
 			itemnums.RemoveAt(0);
 	}
@@ -310,16 +313,15 @@ public class Boat : MonoBehaviour {
 		global=GameObject.Find("Global");
 		guiScript=global.GetComponent<GuiScript>();
 		globalscript = global.GetComponent<GlobalScript>();
-	}
 
-
-	void Update(){
-		canControl=start;
-		ItemEffect(-1);
+		selectedIndex=0;
 	}
 
 	// Update is called once per frame
-	void  FixedUpdate (){
+	void  Update (){
+		canControl=start;
+		ItemEffect(-1);
+
 		Vector4 wavespeed = globalscript.wavecurrspeed;
 		float wavescale = globalscript.wavecurrscale;
 		Vector2 riverspeed =  wavescale/0.05f*(new Vector2(wavespeed.x,wavespeed.y)+new Vector2(wavespeed.z ,wavespeed.w));
@@ -328,7 +330,7 @@ public class Boat : MonoBehaviour {
 		riverspeed.x = Mathf.Clamp(riverspeed.x,-5.0f,5.0f);
 		riverspeed.y = Mathf.Clamp(riverspeed.y,-5.0f,5.0f);
 
-		Debug.Log(riverspeed);
+		//Debug.Log(riverspeed);
 
 		//lag 2s to guarantee boat leave the border
 		if(onborder)
@@ -408,13 +410,13 @@ public class Boat : MonoBehaviour {
 				
 				if(itemnums.Count>0 &&Input.GetButtonDown("Fire1"))
 				{
-					int tempnum = itemnums[0];
+					int tempnum = itemnums[selectedIndex];
 					if(tempnum == 1 || tempnum == 2)
 						boatScript2.ItemEffect(tempnum);
 					else 
 						ItemEffect(tempnum);
 					
-					itemnums.RemoveAt(0);
+					itemnums.RemoveAt(selectedIndex);
 				}
 			}
 			else
@@ -435,15 +437,27 @@ public class Boat : MonoBehaviour {
 				else
 					drift = false;
 				
-				if(itemnums.Count>0 && Input.GetKeyDown(KeyCode.LeftControl))
+				if(itemnums.Count>0)
 				{
-					int tempnum = itemnums[0];
-					if(tempnum == 1 || tempnum == 2)
-						boatScript2.ItemEffect(tempnum);
-					else 
-						ItemEffect(tempnum);
-					
-					itemnums.RemoveAt(0);
+					//select powerup
+					if(Input.GetKeyDown(KeyCode.LeftAlt)){
+						selectedIndex=(selectedIndex+1)%itemnums.Count;
+					}
+
+					//use powerup
+					if(Input.GetKeyDown(KeyCode.LeftControl)){
+						int tempnum = itemnums[selectedIndex];
+						if(tempnum == 1 || tempnum == 2)
+							boatScript2.ItemEffect(tempnum);
+						else 
+							ItemEffect(tempnum);
+						
+						itemnums.RemoveAt(selectedIndex);
+
+						if(selectedIndex>=itemnums.Count){
+							selectedIndex=Mathf.Max(0,itemnums.Count-1);
+						}
+					}
 				}
 			}
 		}
@@ -470,17 +484,27 @@ public class Boat : MonoBehaviour {
 			else
 				drift = false;	
 			
-			if(itemnums.Count>0 && Input.GetKeyDown(KeyCode.RightControl))
+			if(itemnums.Count>0)
 			{
-				int tempnum = itemnums[0];
-				if(tempnum == 1 || tempnum == 2)
-				{
-					boatScript1.ItemEffect(tempnum);
+				//select powerup
+				if(Input.GetKeyDown(KeyCode.RightAlt)){
+					selectedIndex=(selectedIndex+1)%itemnums.Count;
 				}
-				else 
-					ItemEffect(tempnum);
 				
-				itemnums.RemoveAt(0);
+				//use powerup
+				if(Input.GetKeyDown(KeyCode.RightControl)){
+					int tempnum = itemnums[selectedIndex];
+					if(tempnum == 1 || tempnum == 2)
+						boatScript1.ItemEffect(tempnum);
+					else 
+						ItemEffect(tempnum);
+					
+					itemnums.RemoveAt(selectedIndex);
+					
+					if(selectedIndex>=itemnums.Count){
+						selectedIndex=Mathf.Max(0,itemnums.Count-1);
+					}
+				}
 			}
 		}
 

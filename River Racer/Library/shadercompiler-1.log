@@ -1,186 +1,23 @@
-Base path: F:/Program Files (x86)/Unity/Editor/Data
-Pipe name: \\.\pipe\UnityShaderCompiler-1-2052
+Base path: G:/unity3d/Editor/Data
+Pipe name: \\.\pipe\UnityShaderCompiler-1-5616
 Cmd: getPlatforms
 Cmd: preprocess
-  insize=2358 outsize=1037 ok=1
+  insize=5383 outsize=2168 ok=1
 Cmd: preprocess
-  insize=5351 outsize=2168 ok=1
+  insize=5774 outsize=1043 ok=1
 Cmd: preprocess
-  insize=5565 outsize=996 ok=1
+  insize=13357 outsize=2694 ok=1
 Cmd: preprocess
-  insize=2326 outsize=1010 ok=1
+  insize=12509 outsize=2575 ok=1
 Cmd: preprocess
-  insize=1101 outsize=904 ok=1
+  insize=2637 outsize=2637 ok=1
 Cmd: preprocess
-  insize=2749 outsize=1067 ok=1
+  insize=1434 outsize=1434 ok=1
 Cmd: preprocess
-  insize=823 outsize=1017 ok=1
+  insize=970 outsize=1627 ok=1
 Cmd: preprocess
-  insize=5149 outsize=2085 ok=1
-Cmd: compileSnippet
-  api=1 type=0 insize=3368 outsize=487 kw=WATER_REFRACTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=1 insize=3368 outsize=810 kw=WATER_REFRACTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=0 insize=3368 outsize=487 kw=WATER_REFLECTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=1 insize=3368 outsize=756 kw=WATER_REFLECTIVE ok=1
+  insize=2861 outsize=1098 ok=1
 Cmd: preprocess
-  insize=5186 outsize=2085 ok=1
-Cmd: compileSnippet
-  api=1 type=0 insize=3405 outsize=482 kw=WATER_REFLECTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=1 insize=3405 outsize=801 kw=WATER_REFLECTIVE ok=1
+  insize=1574 outsize=702 ok=1
 Cmd: preprocess
-  insize=5185 outsize=2085 ok=1
-Cmd: compileSnippet
-  api=1 type=0 insize=3404 outsize=482 kw=WATER_REFRACTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=1 insize=3404 outsize=855 kw=WATER_REFRACTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=0 insize=3404 outsize=482 kw=WATER_REFLECTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=1 insize=3404 outsize=801 kw=WATER_REFLECTIVE ok=1
-Cmd: preprocess
-  insize=5186 outsize=2085 ok=1
-Cmd: compileSnippet
-  api=1 type=0 insize=3405 outsize=483 kw=WATER_REFRACTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=1 insize=3405 outsize=855 kw=WATER_REFRACTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=0 insize=3405 outsize=483 kw=WATER_REFLECTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=1 insize=3405 outsize=801 kw=WATER_REFLECTIVE ok=1
-Cmd: preprocess
-  insize=5184 outsize=2085 ok=1
-Cmd: compileSnippet
-  api=1 type=0 insize=3403 outsize=482 kw=WATER_REFRACTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=1 insize=3403 outsize=855 kw=WATER_REFRACTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=0 insize=3403 outsize=482 kw=WATER_REFLECTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=1 insize=3403 outsize=801 kw=WATER_REFLECTIVE ok=1
-Cmd: preprocess
-  insize=5184 outsize=2085 ok=1
-Cmd: compileSnippet
-  api=1 type=0 insize=3403 outsize=482 kw=WATER_REFRACTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=1 insize=3403 outsize=855 kw=WATER_REFRACTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=0 insize=3403 outsize=482 kw=WATER_REFLECTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=1 insize=3403 outsize=801 kw=WATER_REFLECTIVE ok=1
-Cmd: preprocess
-  insize=5184 outsize=2085 ok=1
-Cmd: preprocess
-  insize=5185 outsize=2085 ok=1
-Cmd: preprocess
-  insize=5186 outsize=2085 ok=1
-Cmd: compileSnippet
-  api=1 type=0 insize=3405 outsize=482 kw=WATER_REFRACTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=1 insize=3405 outsize=855 kw=WATER_REFRACTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=0 insize=3405 outsize=482 kw=WATER_REFLECTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=1 insize=3405 outsize=801 kw=WATER_REFLECTIVE ok=1
-Cmd: preprocess
-  insize=5188 outsize=2085 ok=1
-Cmd: compileSnippet
-  api=1 type=0 insize=3407 outsize=482 kw=WATER_REFRACTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=1 insize=3407 outsize=816 kw=WATER_REFRACTIVE ok=1
-Cmd: preprocess
-  insize=5186 outsize=2085 ok=1
-Cmd: preprocess
-  insize=5204 outsize=2084 ok=1
-Cmd: compileSnippet
-  api=1 type=0 insize=3423 outsize=500 kw=WATER_REFRACTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=1 insize=3423 outsize=855 kw=WATER_REFRACTIVE ok=1
-Cmd: preprocess
-  insize=5203 outsize=2085 ok=1
-Cmd: compileSnippet
-  api=1 type=0 insize=3422 outsize=499 kw=WATER_REFRACTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=1 insize=3422 outsize=855 kw=WATER_REFRACTIVE ok=1
-Cmd: preprocess
-  insize=5203 outsize=2085 ok=1
-Cmd: compileSnippet
-  api=1 type=0 insize=3422 outsize=501 kw=WATER_REFRACTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=1 insize=3422 outsize=855 kw=WATER_REFRACTIVE ok=1
-Cmd: preprocess
-  insize=5205 outsize=2085 ok=1
-Cmd: compileSnippet
-  api=1 type=0 insize=3424 outsize=492 kw=WATER_REFRACTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=1 insize=3424 outsize=855 kw=WATER_REFRACTIVE ok=1
-Cmd: preprocess
-  insize=5205 outsize=2084 ok=1
-Cmd: compileSnippet
-  api=1 type=0 insize=3424 outsize=492 kw=WATER_REFRACTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=1 insize=3424 outsize=855 kw=WATER_REFRACTIVE ok=1
-Cmd: preprocess
-  insize=5186 outsize=2085 ok=1
-Cmd: preprocess
-  insize=5186 outsize=2085 ok=1
-Cmd: compileSnippet
-  api=1 type=0 insize=3405 outsize=482 kw=WATER_REFRACTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=1 insize=3405 outsize=827 kw=WATER_REFRACTIVE ok=1
-Cmd: preprocess
-  insize=5186 outsize=2085 ok=1
-Cmd: preprocess
-  insize=5173 outsize=2085 ok=1
-Cmd: compileSnippet
-  api=1 type=0 insize=3392 outsize=487 kw=WATER_REFRACTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=1 insize=3392 outsize=855 kw=WATER_REFRACTIVE ok=1
-Cmd: preprocess
-  insize=5172 outsize=2085 ok=1
-Cmd: compileSnippet
-  api=1 type=0 insize=3391 outsize=487 kw=WATER_REFRACTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=1 insize=3391 outsize=855 kw=WATER_REFRACTIVE ok=1
-Cmd: preprocess
-  insize=5188 outsize=2085 ok=1
-Cmd: compileSnippet
-  api=1 type=0 insize=3407 outsize=487 kw=WATER_REFRACTIVE ok=1
-Cmd: compileSnippet
-  error: 1 plat 1 at (124): implicit cast from "float3" to "float2"
-  error: 2 plat 1 at (125): undefined variable "_HorizonColor"
-  error: 1 plat 1 at (128): implicit cast from "float3" to "float2"
-  api=1 type=1 insize=3407 outsize=0 kw=WATER_REFRACTIVE ok=0
-Cmd: preprocess
-  insize=5172 outsize=2085 ok=1
-Cmd: compileSnippet
-  api=1 type=0 insize=3391 outsize=379 kw=WATER_SIMPLE ok=1
-Cmd: compileSnippet
-  api=1 type=1 insize=3391 outsize=679 kw=WATER_SIMPLE ok=1
-Cmd: compileSnippet
-  api=1 type=0 insize=3391 outsize=487 kw=WATER_REFLECTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=1 insize=3391 outsize=801 kw=WATER_REFLECTIVE ok=1
-Cmd: preprocess
-  insize=5172 outsize=2085 ok=1
-Cmd: compileSnippet
-  api=1 type=0 insize=3391 outsize=487 kw=WATER_REFRACTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=1 insize=3391 outsize=855 kw=WATER_REFRACTIVE ok=1
-Cmd: preprocess
-  insize=5173 outsize=2085 ok=1
-Cmd: compileSnippet
-  api=1 type=0 insize=3392 outsize=487 kw=WATER_REFRACTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=1 insize=3392 outsize=855 kw=WATER_REFRACTIVE ok=1
-Cmd: preprocess
-  insize=5173 outsize=2085 ok=1
-Cmd: compileSnippet
-  api=1 type=0 insize=3392 outsize=487 kw=WATER_REFRACTIVE ok=1
-Cmd: compileSnippet
-  api=1 type=1 insize=3392 outsize=855 kw=WATER_REFRACTIVE ok=1
-Cmd: preprocess
-  insize=5172 outsize=2085 ok=1
+  insize=863 outsize=1033 ok=1
