@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GlobalScript : MonoBehaviour {
 	public Water Riverscript;
@@ -15,7 +16,6 @@ public class GlobalScript : MonoBehaviour {
 	public float timeforwave;
 	public float maxwavespeed;
 	public float timeforstep;
-
 
 	//Underwater mat
 	private Material undermat;

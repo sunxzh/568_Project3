@@ -41,20 +41,10 @@ public class Boat : MonoBehaviour {
 	private List<Quaternion> agorot= new List<Quaternion>();
 	private float time = 0.0f;
 
-	public List<int> passedWaypoints;
-	public int rank;
-
 	//Init State
 	private Vector3 InitPos;
-
-	//terms for timing
-	public bool start;
-	public bool end;
-	
-	public float usedTime;
 	
 	private GameObject global;
-	private GuiScript guiScript;
 	//Get info from global
 	GlobalScript globalscript;
 
@@ -245,7 +235,6 @@ public class Boat : MonoBehaviour {
 	} 
 	
 	void Start () {
-
 		boat1=GameObject.Find("Boat1");
 		boat2=GameObject.Find("Boat2");
 		
@@ -289,11 +278,9 @@ public class Boat : MonoBehaviour {
 		//Init pos and rot
 		agopos.Add(transform.position);
 		agorot.Add(transform.rotation);
-
-		rank=0;
+		
 		InitPos = transform.position;
-
-
+		
 		for(int i=0;i<6;i++)
 			itemstarttimes.Add(0.0f);
 
@@ -304,14 +291,8 @@ public class Boat : MonoBehaviour {
 		itemtimes.Add(5.0f*timescale);  //shield time 5s
 		itemtimes.Add(0.0f*timescale);  //mine time 0s
 		itemtimes.Add(5.0f*timescale);  //oil time 5s
-
-
-		//timing stuff
-		start=false;
-		end=false;
-		usedTime=0.0f;
+				
 		global=GameObject.Find("Global");
-		guiScript=global.GetComponent<GuiScript>();
 		globalscript = global.GetComponent<GlobalScript>();
 
 		selectedIndex=0;
@@ -319,7 +300,7 @@ public class Boat : MonoBehaviour {
 
 	// Update is called once per frame
 	void  Update (){
-		canControl=start;
+		canControl=GuiScript.start;
 		ItemEffect(-1);
 
 		Vector4 wavespeed = globalscript.wavecurrspeed;
@@ -606,14 +587,7 @@ public class Boat : MonoBehaviour {
 	}
 
 
-	void OnTriggerEnter(Collider collider){
-		if(collider.CompareTag("FinishLine")){
-			end=true;
-			start=false;
-			usedTime=guiScript.elapsedTime;
-			Debug.Log(usedTime);
-		}
-	}
+
 }
 
 

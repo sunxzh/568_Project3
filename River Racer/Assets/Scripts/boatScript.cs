@@ -1,23 +1,37 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class boatScript : MonoBehaviour {
+public class BoatScript : MonoBehaviour {
+	public List<int> passedWaypoints;
+
+	public int rank;
+
+	public float usedTime;
+	public float distToNextWaypoint;
+
+	public bool end;
 
 	// Use this for initialization
 	void Start () {
-		StartCoroutine (WaitAndCollider (3.0f));
+		passedWaypoints=new List<int>();
+
+		rank=0;
+
+		usedTime=0.0f;
+		distToNextWaypoint=0.0f;
+
+		end=false;
 	}
 
-	IEnumerator WaitAndCollider(float time){
-		yield return new WaitForSeconds(time);
-		CapsuleCollider c = this.gameObject.AddComponent<CapsuleCollider> ();
-		c.radius = 0.3f;
-		c.height = 8f;
-		c.direction = 2;
-	}
 
 	// Update is called once per frame
 	void Update () {
-	
+		if(!end&&GuiScript.start){
+			Vector2 boatPos=new Vector2(gameObject.transform.position.x,gameObject.transform.position.z);
+			GameObject nextWaypoint=GameObject.Find((passedWaypoints.Count+1).ToString());
+			Vector2 waypointPos=new Vector2(nextWaypoint.transform.position.x,nextWaypoint.transform.position.z);
+			distToNextWaypoint=(boatPos-waypointPos).magnitude;
+		}
 	}
 }

@@ -19,6 +19,11 @@ public class GuiScript : MonoBehaviour {
 	public Texture homeBtnTex;
 	
 	public float elapsedTime;
+
+	public static List<string> finalRank;
+	public static List<GameObject> boats;
+
+	public static bool start;
 	
 	private GameObject boat1;
 	private GameObject boat2;
@@ -26,8 +31,10 @@ public class GuiScript : MonoBehaviour {
 	private GameObject CPU2;
 	private GameObject CPU3;
 	
-	private Boat boatScript1;
-	private Boat boatScript2;
+	private BoatScript boatScript1;
+	private BoatScript boatScript2;
+	private Boat playerScript1;
+	private Boat playerScript2;
 	
 	private Vector2 rankTextSize;
 	
@@ -46,8 +53,10 @@ public class GuiScript : MonoBehaviour {
 		CPU2 = GameObject.Find ("CPU2");
 		CPU3 = GameObject.Find ("CPU3");
 		
-		boatScript1=boat1.GetComponent<Boat>();
-		boatScript2=boat2.GetComponent<Boat>();
+		boatScript1=boat1.GetComponent<BoatScript>();
+		boatScript2=boat2.GetComponent<BoatScript>();
+		playerScript1=boat1.GetComponent<Boat>();
+		playerScript2=boat2.GetComponent<Boat>();
 		
 		countdownTime=4.0f;
 		resultTime1=0.0f;
@@ -57,6 +66,20 @@ public class GuiScript : MonoBehaviour {
 		style.fontSize=Screen.width/35;
 		resultStyle.fontSize=Screen.width/4;
 		countdownStyle.fontSize=Screen.width/4;
+
+		finalRank=new List<string>();
+
+		boats=new List<GameObject>();
+		GameObject[] players=GameObject.FindGameObjectsWithTag("boat");
+		GameObject[] cpus=GameObject.FindGameObjectsWithTag("CPUBoat");
+		foreach(GameObject obj in players){
+			boats.Add(obj);
+		}
+		foreach(GameObject obj in cpus){
+			boats.Add(obj);
+		}
+
+		start=false;
 	}
 
 	void drawPowerups(List<int> powerups,bool isBoat1){
@@ -94,9 +117,9 @@ public class GuiScript : MonoBehaviour {
 
 		if(powerups.Count>0){
 			if(isBoat1){
-				GUI.Label(new Rect(Screen.width*(0.01f+0.08f*boatScript1.selectedIndex), Screen.height*0.9f, Screen.width*0.08f, Screen.width*0.08f),frameTex);
+				GUI.Label(new Rect(Screen.width*(0.01f+0.08f*playerScript1.selectedIndex), Screen.height*0.9f, Screen.width*0.08f, Screen.width*0.08f),frameTex);
 			}else{
-				GUI.Label(new Rect(Screen.width*(0.51f+0.08f*boatScript2.selectedIndex), Screen.height*0.9f, Screen.width*0.08f, Screen.width*0.08f),frameTex);
+				GUI.Label(new Rect(Screen.width*(0.51f+0.08f*playerScript2.selectedIndex), Screen.height*0.9f, Screen.width*0.08f, Screen.width*0.08f),frameTex);
 			}
 		}
 	}
@@ -115,8 +138,8 @@ public class GuiScript : MonoBehaviour {
 		GUI.Label(new Rect(Screen.width*(0.75f-0.075f), 0.0f, Screen.width*0.15f, Screen.width*0.1f),rankTimeBgTex);
 
 		//rank text
-		GUI.Label(new Rect(Screen.width*0.25f-style.fontSize*0.5f, Screen.height*0.02f, style.fontSize, style.fontSize),"Rank "+boatScript1.rank+"/2",style);
-		GUI.Label(new Rect(Screen.width*0.75f-style.fontSize*0.5f, Screen.height*0.02f, style.fontSize, style.fontSize),"Rank "+boatScript2.rank+"/2",style);
+		GUI.Label(new Rect(Screen.width*0.25f-style.fontSize*0.5f, Screen.height*0.02f, style.fontSize, style.fontSize),"Rank "+boatScript1.rank+"/"+boats.Count,style);
+		GUI.Label(new Rect(Screen.width*0.75f-style.fontSize*0.5f, Screen.height*0.02f, style.fontSize, style.fontSize),"Rank "+boatScript2.rank+"/"+boats.Count,style);
 
 		//timer bg
 		GUI.Label(new Rect(Screen.width*(0.5f-0.075f), 0.0f, Screen.width*0.15f, Screen.width*0.1f),rankTimeBgTex);
@@ -142,13 +165,13 @@ public class GuiScript : MonoBehaviour {
 		}
 
 		//power up
-		drawPowerups(boatScript1.itemnums,true);
-		drawPowerups(boatScript2.itemnums,false);
+		drawPowerups(playerScript1.itemnums,true);
+		drawPowerups(playerScript2.itemnums,false);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(!boatScript1.start&&!boatScript2.start){
+		if(!start){
 			if(countdownTime>0.0f){
 				countdownStyle.fontSize+=1;
 				countdownText=Mathf.Floor(countdownTime%4).ToString();
@@ -158,8 +181,7 @@ public class GuiScript : MonoBehaviour {
 				countdownTime-=Time.deltaTime;
 			}else{
 				countdownText="";
-				boatScript1.start=true;
-				boatScript2.start=true;
+				start=true;
 				CPU1.GetComponent<SplineController>().FollowSpline();
 				CPU2.GetComponent<SplineController>().FollowSpline();
 				CPU3.GetComponent<SplineController>().FollowSpline();

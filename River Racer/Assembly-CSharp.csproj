@@ -52,8 +52,10 @@
      <Compile Include="Assets\RiverTool\IRiverTool.cs" />
      <Compile Include="Assets\RiverTool\TextureAnimator.cs" />
      <Compile Include="Assets\Scripts\Boat.cs" />
+     <Compile Include="Assets\Scripts\BoatScript.cs" />
      <Compile Include="Assets\Scripts\BorderScript.cs" />
      <Compile Include="Assets\Scripts\DebugUtils.cs" />
+     <Compile Include="Assets\Scripts\FinishLineScript.cs" />
      <Compile Include="Assets\Scripts\GlobalScript.cs" />
      <Compile Include="Assets\Scripts\GuiScript.cs" />
      <Compile Include="Assets\Scripts\ItemBoxAnimScript.cs" />
@@ -70,7 +72,6 @@
      <Compile Include="Assets\Scripts\SplineOrientation.cs" />
      <Compile Include="Assets\Scripts\StarScript.cs" />
      <Compile Include="Assets\Scripts\UFOScript.cs" />
-     <Compile Include="Assets\Scripts\boatScript.cs" />
      <Compile Include="Assets\Scripts\rankScript.cs" />
      <Compile Include="Assets\Scripts\riverScript.cs" />
      <Compile Include="Assets\Scripts\terrainObjectScript.cs" />

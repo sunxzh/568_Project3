@@ -4,18 +4,13 @@ using System.Collections;
 public class RealBoxScript : MonoBehaviour {
 	public GameObject explode;
 
-	private Boat boatScript1;
-	private Boat boatScript2;
+	private Boat playerScript;
 
-	private GameObject boat1;
-	private GameObject boat2;
+	private GameObject boat;
+
 	// Use this for initialization
-	void Start () {
-		boat1=GameObject.Find("Boat1");
-		boat2=GameObject.Find("Boat2");
-		
-		boatScript1=boat1.GetComponent<Boat>();
-		boatScript2=boat2.GetComponent<Boat>();
+	void Start () {		
+
 	}
 	
 	// Update is called once per frame
@@ -27,19 +22,18 @@ public class RealBoxScript : MonoBehaviour {
 	{ 
 		Collider collider = collision.collider; 
 
-		if( collider.name == "Boat1") 
+		if( collider.CompareTag("boat")) 
 		{
-			boatScript1.RandomItem();
+			boat=GameObject.Find(collider.name);
+			playerScript=boat.GetComponent<Boat>();
+			playerScript.RandomItem();
 			GameObject temp = (GameObject)Instantiate(explode,gameObject.transform.position,explode.transform.rotation);
 			Destroy(temp,1.0f);
 			Destroy(gameObject);
 		}
-		else if( collider.name == "Boat2") 
+		else if( collider.CompareTag("CPUBoat")) 
 		{
-			boatScript2.RandomItem();
-			GameObject temp = (GameObject)Instantiate(explode,gameObject.transform.position,explode.transform.rotation);
-			Destroy(temp,1.0f);
-			Destroy(gameObject);
+
 		}
 		else 
 		{
