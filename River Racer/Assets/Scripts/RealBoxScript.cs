@@ -5,6 +5,7 @@ public class RealBoxScript : MonoBehaviour {
 	public GameObject explode;
 
 	private Boat playerScript;
+	private BoatCPU CPUScript;
 
 	private GameObject boat;
 
@@ -33,7 +34,12 @@ public class RealBoxScript : MonoBehaviour {
 		}
 		else if( collider.CompareTag("CPUBoat")) 
 		{
-
+			boat=GameObject.Find(collider.name);
+			CPUScript=boat.GetComponent<BoatCPU>();
+			CPUScript.RandomItem();
+			GameObject temp = (GameObject)Instantiate(explode,gameObject.transform.position,explode.transform.rotation);
+			Destroy(temp,1.0f);
+			Destroy(gameObject);
 		}
 		else //destroy all other things on river
 		{

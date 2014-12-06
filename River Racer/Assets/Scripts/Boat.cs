@@ -689,7 +689,7 @@ public class Boat : MonoBehaviour {
 		Collider collider = collision.collider; 
 		if(collider.CompareTag("Rocks")){
 			if(!shield)
-			   CurrVel *= 0.3f;
+				CurrVel *= 1f; //0.3f;
 			else
 				shield = false; 
 		}
