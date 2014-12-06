@@ -72,6 +72,7 @@
      <Compile Include="Assets\Scripts\SplineNodeProperties.cs" />
      <Compile Include="Assets\Scripts\SplineOrientation.cs" />
      <Compile Include="Assets\Scripts\StarScript.cs" />
+     <Compile Include="Assets\Scripts\TitleScript.cs" />
      <Compile Include="Assets\Scripts\UFOScript.cs" />
      <Compile Include="Assets\Scripts\VortexScript.cs" />
      <Compile Include="Assets\Scripts\rankScript.cs" />

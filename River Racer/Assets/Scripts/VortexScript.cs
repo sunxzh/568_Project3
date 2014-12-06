@@ -6,14 +6,26 @@ public class VortexScript : MonoBehaviour {
 
 	public GameObject[] boats;
 
-
 	// Use this for initialization
 	void Start () {
-		boats[0] =GameObject.Find("Boat1");
-		boats[1] =GameObject.Find("Boat2");
-		boats[2] = GameObject.Find ("CPU1");
-		boats[3] = GameObject.Find ("CPU2");
-		boats[4] = GameObject.Find ("CPU3");
+		int index = 0;
+		if(GameObject.Find("Boat1"))
+			boats[index++] = GameObject.Find("Boat1");
+
+		if(GameObject.Find("Boat2"))
+			boats[index++] = GameObject.Find("Boat2");
+
+		if(GameObject.Find("CPU1"))
+			boats[index++] = GameObject.Find("CPU1");
+
+		
+		if(GameObject.Find("CPU2"))
+			boats[index++] = GameObject.Find("CPU2");
+
+		if(GameObject.Find("CPU3"))
+			boats[index++] = GameObject.Find("CPU3");
+
+
 		speed = Random.Range (-2.0f,2.0f);
 		if(speed>=0.0f)
 			speed = Mathf.Clamp(speed,0.5f,2.0f);

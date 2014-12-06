@@ -99,7 +99,7 @@ public class Boat : MonoBehaviour {
 
 			if(itemstarttimes[tempid]<0.01f)
 			{
-				AudioSource.PlayClipAtPoint(itemSounds[tempid], transform.position ,2.5f); 
+				AudioSource.PlayClipAtPoint(itemSounds[tempid], transform.position ,1.0f); 
 			}
 			
 			itemstarttimes[tempid] += Time.deltaTime;
@@ -121,7 +121,7 @@ public class Boat : MonoBehaviour {
 
 			if(itemstarttimes[tempid]<0.01f)
 			{
-				AudioSource.PlayClipAtPoint(itemSounds[tempid], transform.position ,0.5f); 
+				AudioSource.PlayClipAtPoint(itemSounds[tempid], transform.position ,0.3f); 
 			}
 			
 			//Reverse control
@@ -198,7 +198,7 @@ public class Boat : MonoBehaviour {
 		//4 WaterMine generate a water mine after the boat
 		if(itemid == 4)
 		{
-			AudioSource.PlayClipAtPoint(itemSounds[4], transform.position ,1.0f); 
+			AudioSource.PlayClipAtPoint(itemSounds[4], transform.position ,0.5f); 
 			Vector3 gpos = transform.position + 8.0f * transform.forward;
 			gpos.y += 2.0f;
 			GameObject temp = (GameObject)Instantiate(Items[itemid],gpos,transform.rotation);
@@ -225,7 +225,7 @@ public class Boat : MonoBehaviour {
 		//5 Oilbarrel generate a Oilbarrel after the boat
 		if(itemid == 5)
 		{
-			AudioSource.PlayClipAtPoint(itemSounds[4], transform.position ,1.0f); 
+			AudioSource.PlayClipAtPoint(itemSounds[4], transform.position ,0.5f); 
 			Vector3 gpos = transform.position + 8.0f * transform.forward;
 			gpos.y += 2.0f;
 			GameObject temp = (GameObject)Instantiate(Items[itemid],gpos,transform.rotation* Quaternion.Euler(new Vector3(90.0f,0.0f, 0.0f)));

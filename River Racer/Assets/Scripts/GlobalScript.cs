@@ -25,7 +25,8 @@ public class GlobalScript : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		joystick = true;
+		joystick = false;
+
 		Riverscript = GameObject.FindGameObjectWithTag("river").GetComponent<Water>();
 		timeforwaves = 0.0f;
 		timeforstep = 20.0f;
@@ -39,6 +40,9 @@ public class GlobalScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if(Input.GetJoystickNames().Length>0 && Input.GetJoystickNames()[0] == "Controller (Gamepad F310)")
+			joystick = true;
+
 		wavecurrspeed = Riverscript.mat.GetVector("WaveSpeed");
 		wavecurrscale = Riverscript.mat.GetFloat("_WaveScale");
 		
