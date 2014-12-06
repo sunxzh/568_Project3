@@ -42,6 +42,8 @@ public class GlobalScript : MonoBehaviour {
 	void Update () {
 		if(Input.GetJoystickNames().Length>0 && Input.GetJoystickNames()[0] == "Controller (Gamepad F310)")
 			joystick = true;
+		else
+			joystick = false;
 
 		wavecurrspeed = Riverscript.mat.GetVector("WaveSpeed");
 		wavecurrscale = Riverscript.mat.GetFloat("_WaveScale");

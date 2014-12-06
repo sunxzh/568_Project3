@@ -47,6 +47,13 @@ public class VortexScript : MonoBehaviour {
 				boats[i].transform.position += 	
 					new Vector3(draw * dist.x/dist.magnitude,0.0f,draw * dist.z/dist.magnitude);
 
+				if(boats[i].GetComponent<Boat>())
+				{
+					if(boats[i].GetComponent<Boat>().onborder)
+						Destroy(gameObject);
+				}
+
+
 				//delete vortex after a while:avoid too long stuck
 				Destroy(gameObject,5.0f);
 			}

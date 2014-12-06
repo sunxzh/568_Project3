@@ -70,7 +70,7 @@ public class Boat : MonoBehaviour {
 	public AudioClip[] itemSounds;
 
 	//if collide with border, stop wavespeed
-	private bool onborder = false;
+	public bool onborder = false;
 	private float onborderlag = 0.0f;
 
 	public int selectedIndex;
@@ -299,7 +299,7 @@ public class Boat : MonoBehaviour {
 		maxVel = 70.0f;
 		maxVel_copy = maxVel;
 		minVel = -maxVel/2.0f;
-		Acc = 0.2f;
+		Acc = 0.3f;
 		Acc_copy = Acc;
 
 		rudderSensivity = 45;
@@ -692,6 +692,10 @@ public class Boat : MonoBehaviour {
 			   CurrVel *= 0.3f;
 			else
 				shield = false; 
+		}
+
+		if(collider.CompareTag("Logs")){
+				CurrVel *= 0.8f;
 		}
 
 		if(collider.CompareTag("Borders")){
