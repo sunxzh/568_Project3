@@ -197,7 +197,10 @@ public class GuiScript : MonoBehaviour {
 				countdownText="";
 				start=true;
 				CPU1.GetComponent<SplineController>().FollowSpline();
+				CPU1.GetComponent<BoatCPU>().isMoving = true;
 				CPU2.GetComponent<SplineController>().FollowSpline();
+				CPU2.GetComponent<BoatCPU>().isMoving = true;
+				CPU3.GetComponent<BoatCPU>().isMoving = true;
 				CPU3.GetComponent<SplineController>().FollowSpline();
 			}
 		}else{

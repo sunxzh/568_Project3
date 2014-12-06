@@ -56,8 +56,15 @@ public class Boat : MonoBehaviour {
 	//effect on each other
 	private Boat boatScript1;
 	private Boat boatScript2;
+	private BoatCPU CPUBoatScript1;
+	private BoatCPU CPUBoatScript2;
+	private BoatCPU CPUBoatScript3;
+
 	private GameObject boat1;
 	private GameObject boat2;
+	private GameObject CPUboat1;
+	private GameObject CPUboat2;
+	private GameObject CPUboat3;
 
 	//List to store items
 	public GameObject[] Items;
@@ -269,9 +276,17 @@ public class Boat : MonoBehaviour {
  
 		boat1=GameObject.Find("Boat1");
 		boat2=GameObject.Find("Boat2");
+		CPUboat1 = GameObject.Find ("CPU1");
+		CPUboat2 = GameObject.Find ("CPU2");
+		CPUboat3 = GameObject.Find ("CPU3");
 		
+
 		boatScript1=boat1.GetComponent<Boat>();
 		boatScript2=boat2.GetComponent<Boat>();
+		CPUBoatScript1 = CPUboat1.GetComponent<BoatCPU> ();
+		CPUBoatScript2 = CPUboat2.GetComponent<BoatCPU> ();
+		CPUBoatScript3 = CPUboat3.GetComponent<BoatCPU> ();
+		
 
 		//Setup rigidbody
 		Physics.gravity = new Vector3(0.0f,0.0f,0.0f);
@@ -463,8 +478,13 @@ public class Boat : MonoBehaviour {
 						//use powerup
 						if(Input.GetButtonDown("Fire1")){
 							int tempnum = itemnums[selectedIndex];
-							if(tempnum == 1 || tempnum == 2)
+							if(tempnum == 1 || tempnum == 2){
+								Debug.Log (gameObject.name);
 								boatScript2.ItemEffect(tempnum);
+								CPUBoatScript1.ItemEffect (tempnum);
+								CPUBoatScript2.ItemEffect (tempnum);
+								CPUBoatScript3.ItemEffect (tempnum);
+							}
 							else 
 								ItemEffect(tempnum);
 							
@@ -507,8 +527,12 @@ public class Boat : MonoBehaviour {
 						//use powerup
 						if(Input.GetKeyDown(KeyCode.LeftControl)){
 							int tempnum = itemnums[selectedIndex];
-							if(tempnum == 1 || tempnum == 2)
+							if(tempnum == 1 || tempnum == 2){
 								boatScript2.ItemEffect(tempnum);
+								CPUBoatScript1.ItemEffect (tempnum);
+								CPUBoatScript2.ItemEffect (tempnum);
+								CPUBoatScript3.ItemEffect (tempnum);
+							}
 							else 
 								ItemEffect(tempnum);
 							
@@ -555,9 +579,12 @@ public class Boat : MonoBehaviour {
 						//use powerup
 						if(Input.GetKeyDown(KeyCode.RightControl)||Input.GetKeyDown(KeyCode.LeftControl)){
 							int tempnum = itemnums[selectedIndex];
-							if(tempnum == 1 || tempnum == 2)
+							if(tempnum == 1 || tempnum == 2){
 								boatScript1.ItemEffect(tempnum);
-							else 
+								CPUBoatScript1.ItemEffect (tempnum);
+								CPUBoatScript2.ItemEffect (tempnum);
+								CPUBoatScript3.ItemEffect (tempnum);
+							}else 
 								ItemEffect(tempnum);
 							
 							itemnums.RemoveAt(selectedIndex);
@@ -599,9 +626,12 @@ public class Boat : MonoBehaviour {
 						//use powerup
 						if(Input.GetKeyDown(KeyCode.RightControl)){
 							int tempnum = itemnums[selectedIndex];
-							if(tempnum == 1 || tempnum == 2)
+							if(tempnum == 1 || tempnum == 2){
 								boatScript1.ItemEffect(tempnum);
-							else 
+								CPUBoatScript1.ItemEffect (tempnum);
+								CPUBoatScript2.ItemEffect (tempnum);
+								CPUBoatScript3.ItemEffect (tempnum);
+							}else 
 								ItemEffect(tempnum);
 							
 							itemnums.RemoveAt(selectedIndex);

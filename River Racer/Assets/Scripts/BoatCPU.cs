@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class BoatCPU : MonoBehaviour {
 	
 	public Transform engineSpume;
+	public bool isMoving = false;
 
 	public float mass;
 	public GameObject SphereBody;
@@ -29,8 +30,15 @@ public class BoatCPU : MonoBehaviour {
 	//effect on each other
 	private Boat boatScript1;
 	private Boat boatScript2;
+	private BoatCPU CPUBoatScript1;
+	private BoatCPU CPUBoatScript2;
+	private BoatCPU CPUBoatScript3;
+	
 	private GameObject boat1;
 	private GameObject boat2;
+	private GameObject CPUboat1;
+	private GameObject CPUboat2;
+	private GameObject CPUboat3;
 	
 	//List to store items
 	public GameObject[] Items;
@@ -139,7 +147,7 @@ public class BoatCPU : MonoBehaviour {
 		if(itemid == 4)
 		{
 			
-			GameObject temp = (GameObject)Instantiate(Items[itemid],transform.position + 8.0f * transform.forward,transform.rotation);
+			GameObject temp = (GameObject)Instantiate(Items[itemid],transform.position - 8.0f * transform.forward,transform.rotation);
 			temp.rigidbody.velocity = 0.3f * rigidbody.velocity  + transform.right * Random.Range(-15, 15);
 		}
 		
@@ -160,7 +168,7 @@ public class BoatCPU : MonoBehaviour {
 		//5 Oilbarrel generate a Oilbarrel after the boat
 		if(itemid == 5)
 		{
-			GameObject temp = (GameObject)Instantiate(Items[itemid],transform.position + 8.0f * transform.forward,transform.rotation* Quaternion.Euler(new Vector3(0.0f,90.0f, 0.0f)));
+			GameObject temp = (GameObject)Instantiate(Items[itemid],transform.position - 8.0f * transform.forward,transform.rotation* Quaternion.Euler(new Vector3(0.0f,90.0f, 0.0f)));
 			temp.rigidbody.velocity = 0.4f * rigidbody.velocity + transform.right * Random.Range(-15, 15);
 		}
 		
@@ -196,9 +204,16 @@ public class BoatCPU : MonoBehaviour {
 	void Start () {
 		boat1=GameObject.Find("Boat1");
 		boat2=GameObject.Find("Boat2");
+		CPUboat1 = GameObject.Find ("CPU1");
+		CPUboat2 = GameObject.Find ("CPU2");
+		CPUboat3 = GameObject.Find ("CPU3");
+		
 		
 		boatScript1=boat1.GetComponent<Boat>();
 		boatScript2=boat2.GetComponent<Boat>();
+		CPUBoatScript1 = CPUboat1.GetComponent<BoatCPU> ();
+		CPUBoatScript2 = CPUboat2.GetComponent<BoatCPU> ();
+		CPUBoatScript3 = CPUboat3.GetComponent<BoatCPU> ();
 		
 		//Setup rigidbody
 		Physics.gravity = new Vector3(0.0f,0.0f,0.0f);
@@ -266,9 +281,8 @@ public class BoatCPU : MonoBehaviour {
 			onborder = false;
 			onborderlag = 0.0f;
 		}
-		
-		
-		
+
+				
 		time += Time.deltaTime;
 		if(time>1.0f)
 		{
@@ -304,13 +318,29 @@ public class BoatCPU : MonoBehaviour {
 			rigidbody.angularVelocity /= 1.5f;
 		
 		//create particles for propeller
-		if(engineSpume!=null)
+		if(engineSpume!=null && isMoving)
 		{
-			engineSpume.particleEmitter.minEmission = Mathf.Abs(0.8f * 15);
-			engineSpume.particleEmitter.maxEmission = Mathf.Abs(1.2f * 15);
+			engineSpume.particleEmitter.minEmission = Mathf.Abs(0.8f * 15f );
+			engineSpume.particleEmitter.maxEmission = Mathf.Abs(1.2f * 15f );
 			engineSpume.particleEmitter.Emit();				
 		}
-		
+
+
+		//AI using items
+		if (itemnums.Count > 0){
+			int tempnum = itemnums[0];
+			if(tempnum == 1 || tempnum == 2){
+				boatScript1.ItemEffect(tempnum);
+				boatScript2.ItemEffect(tempnum);
+				CPUBoatScript1.ItemEffect (tempnum);
+				CPUBoatScript2.ItemEffect (tempnum);
+				CPUBoatScript3.ItemEffect (tempnum);
+			}
+			else 
+				ItemEffect(tempnum);
+			
+			itemnums.RemoveAt(selectedIndex);
+		}
 	
 	}
 	
