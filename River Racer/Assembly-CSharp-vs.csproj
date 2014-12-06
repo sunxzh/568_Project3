@@ -54,7 +54,9 @@
      <Compile Include="Assets\Scripts\Boat.cs" />
      <Compile Include="Assets\Scripts\BoatScript.cs" />
      <Compile Include="Assets\Scripts\BorderScript.cs" />
+     <Compile Include="Assets\Scripts\ChampionScript.cs" />
      <Compile Include="Assets\Scripts\DebugUtils.cs" />
+     <Compile Include="Assets\Scripts\EndSceneScript.cs" />
      <Compile Include="Assets\Scripts\FinishLineScript.cs" />
      <Compile Include="Assets\Scripts\GlobalScript.cs" />
      <Compile Include="Assets\Scripts\GuiScript.cs" />

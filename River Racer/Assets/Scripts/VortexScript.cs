@@ -41,21 +41,18 @@ public class VortexScript : MonoBehaviour {
 		for(int i=0;i<boats.Length;i++)
 		{
 			Vector3 dist = gameObject.transform.position - boats[i].transform.position;
-			if(dist.magnitude < 15.0f)
+			Vector2 dist2D = new Vector2(dist.x,dist.z);
+			if(dist2D.magnitude < 15.0f)
 			{
 				float draw = 0.5f * Mathf.Abs(speed);
 				boats[i].transform.position += 	
-					new Vector3(draw * dist.x/dist.magnitude,0.0f,draw * dist.z/dist.magnitude);
+					new Vector3(draw * dist.x/dist2D.magnitude,0.0f,draw * dist.z/dist2D.magnitude);
 
 				if(boats[i].GetComponent<Boat>())
 				{
 					if(boats[i].GetComponent<Boat>().onborder)
 						Destroy(gameObject);
 				}
-
-
-				//delete vortex after a while:avoid too long stuck
-				Destroy(gameObject,5.0f);
 			}
 		}
 	}

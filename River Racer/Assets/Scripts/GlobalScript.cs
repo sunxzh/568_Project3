@@ -3,6 +3,7 @@ using System.Collections;
 
 public class GlobalScript : MonoBehaviour {
 	public static bool joystick;
+	public static string firstname;
 
 	public Water Riverscript;
 	public GameObject Underwater;
@@ -22,9 +23,16 @@ public class GlobalScript : MonoBehaviour {
 	private float randomscale;
 	Vector4 stepforspeed = Vector4.zero;
 	float stepforscale = 0.0f;
-	
+
+	private GameObject global;
+	private GuiScript guiScript;
+
 	// Use this for initialization
 	void Start () {
+		firstname = "Boat1";
+		global=GameObject.Find("Global");		
+		guiScript=global.GetComponent<GuiScript>();
+
 		joystick = false;
 
 		Riverscript = GameObject.FindGameObjectWithTag("river").GetComponent<Water>();
@@ -40,6 +48,14 @@ public class GlobalScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		//if both finish, end 
+		if(global.GetComponent<GuiScript>() && GuiScript.finalRank.Contains("Boat1")&&GuiScript.finalRank.Contains("Boat2"))
+		{
+			firstname = GuiScript.finalRank[0];
+			Application.LoadLevel("EndScene");
+		}
+
 		if(Input.GetJoystickNames().Length>0 && Input.GetJoystickNames()[0] == "Controller (Gamepad F310)")
 			joystick = true;
 		else

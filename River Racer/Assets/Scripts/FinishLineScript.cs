@@ -24,7 +24,6 @@ public class FinishLineScript : MonoBehaviour {
 			boatScript.usedTime=guiScript.elapsedTime;
 
 			GuiScript.finalRank.Add(collider.name);
-			Debug.Log(GuiScript.finalRank[GuiScript.finalRank.Count-1]+" end");
 		}
 
 		if(collider.CompareTag("CPUBoat")&&!GuiScript.finalRank.Contains(collider.name)){
@@ -35,7 +34,6 @@ public class FinishLineScript : MonoBehaviour {
 			boatScript.usedTime=guiScript.elapsedTime;
 
 			GuiScript.finalRank.Add(collider.name);
-			Debug.Log(GuiScript.finalRank[GuiScript.finalRank.Count-1]+" end");
 		}
 	}
 
