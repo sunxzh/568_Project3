@@ -7,7 +7,7 @@ public class SplineOrientation : MonoBehaviour {
 	private float radiusOfVariation = 20f;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		Debug.Log (gameObject.name);
 
 		transforms = this.gameObject.GetComponentsInChildren<Transform> ();
