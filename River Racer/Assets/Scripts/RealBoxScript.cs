@@ -35,7 +35,7 @@ public class RealBoxScript : MonoBehaviour {
 		{
 
 		}
-		else 
+		else //destroy all other things on river
 		{
 			if(collider.tag == "Borders")
 				Destroy(gameObject);

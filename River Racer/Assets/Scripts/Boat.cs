@@ -3,13 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Boat : MonoBehaviour {
-
-	//Add joystick control
-	public bool joysticks;
+	//Add arrow 
+	public GameObject Arrow;
+	private Vector3 ArrowtoBoat;
+	
 	//player1 or player2
 	public bool isPlayer1;
 	
 	//Rewrite most parts
+	public bool stop = false;
 	public bool canControl = true;
 	public bool autoAcc = true;
 	public AudioClip engineSound;
@@ -19,6 +21,8 @@ public class Boat : MonoBehaviour {
 	public int rudderSensivity = 45;
 	public float maxVel = 40.0f;
 	public float maxVel_copy = 30.0f;
+	public float minVel = -15.0f;
+
 	public Camera mainC;
 	public float CurrVel = 0.0f;
 	public float Acc = 0.1f;
@@ -62,6 +66,9 @@ public class Boat : MonoBehaviour {
 	public List<float> itemtimes; //items last time
 	private bool shield;
 
+	//sounds for items
+	public AudioClip[] itemSounds;
+
 	//if collide with border, stop wavespeed
 	private bool onborder = false;
 	private float onborderlag = 0.0f;
@@ -90,6 +97,11 @@ public class Boat : MonoBehaviour {
 			Acc = 1.5f * Acc_copy;
 			maxVel = 1.5f * maxVel_copy;
 
+			if(itemstarttimes[tempid]<0.01f)
+			{
+				AudioSource.PlayClipAtPoint(itemSounds[tempid], transform.position ,2.5f); 
+			}
+			
 			itemstarttimes[tempid] += Time.deltaTime;
 
 			if(itemstarttimes[tempid]>itemtimes[tempid])
@@ -106,6 +118,11 @@ public class Boat : MonoBehaviour {
 		{
 			int tempid = 1;
 			Items[tempid].GetComponent<StarScript>().onoff = true;
+
+			if(itemstarttimes[tempid]<0.01f)
+			{
+				AudioSource.PlayClipAtPoint(itemSounds[tempid], transform.position ,0.5f); 
+			}
 			
 			//Reverse control
 			reverse = -1.0f;
@@ -134,6 +151,11 @@ public class Boat : MonoBehaviour {
 			Acc = 0.5f * Acc_copy;
 			maxVel = 0.5f * maxVel_copy;
 
+			if(itemstarttimes[tempid]<0.01f)
+			{
+				AudioSource.PlayClipAtPoint(itemSounds[tempid], transform.position ,1.0f); 
+			}
+			
 			if(shield)
 			{
 				itemstarttimes[tempid] = itemtimes[tempid] + 1.0f;
@@ -160,8 +182,11 @@ public class Boat : MonoBehaviour {
 			
 			//shield works one time
 			if(itemstarttimes[tempid]<0.01f)
+			{
+				AudioSource.PlayClipAtPoint(itemSounds[tempid], transform.position ,1.0f); 
 				shield = true;
-			
+			}
+
 			itemstarttimes[tempid] += Time.deltaTime;
 			if(itemstarttimes[tempid]>itemtimes[tempid]||shield == false)
 			{
@@ -173,14 +198,17 @@ public class Boat : MonoBehaviour {
 		//4 WaterMine generate a water mine after the boat
 		if(itemid == 4)
 		{
-
-			GameObject temp = (GameObject)Instantiate(Items[itemid],transform.position + 8.0f * transform.forward,transform.rotation);
-			temp.rigidbody.velocity = 0.3f * rigidbody.velocity  + transform.right * Random.Range(-15, 15);
+			AudioSource.PlayClipAtPoint(itemSounds[4], transform.position ,1.0f); 
+			Vector3 gpos = transform.position + 8.0f * transform.forward;
+			gpos.y += 2.0f;
+			GameObject temp = (GameObject)Instantiate(Items[itemid],gpos,transform.rotation);
+			temp.rigidbody.velocity = 0.8f * rigidbody.velocity  + transform.right * Random.Range(-25.0f,25.0f);
 		}
 
 		//If hit mine, trace back to the pos 5 seconds ago
 		if(itemid == 6)
 		{
+			AudioSource.PlayClipAtPoint(itemSounds[5], transform.position ,1.0f);
 			if(shield)
 				shield = false;
 			else
@@ -197,8 +225,11 @@ public class Boat : MonoBehaviour {
 		//5 Oilbarrel generate a Oilbarrel after the boat
 		if(itemid == 5)
 		{
-			GameObject temp = (GameObject)Instantiate(Items[itemid],transform.position + 8.0f * transform.forward,transform.rotation* Quaternion.Euler(new Vector3(0.0f,90.0f, 0.0f)));
-			temp.rigidbody.velocity = 0.4f * rigidbody.velocity + transform.right * Random.Range(-15, 15);
+			AudioSource.PlayClipAtPoint(itemSounds[4], transform.position ,1.0f); 
+			Vector3 gpos = transform.position + 8.0f * transform.forward;
+			gpos.y += 2.0f;
+			GameObject temp = (GameObject)Instantiate(Items[itemid],gpos,transform.rotation* Quaternion.Euler(new Vector3(90.0f,0.0f, 0.0f)));
+			temp.rigidbody.velocity = 0.8f * rigidbody.velocity + transform.right * Random.Range(-25.0f, 25.0f);
 		}
 
 		//If hit Oilbarrel, become slippery
@@ -206,7 +237,7 @@ public class Boat : MonoBehaviour {
 		{
 			int tempid = 5;
 		    //mine makes u slippery
-			slippery = 50.0f;
+			slippery = 20.0f;
 
 			if(shield)
 			{
@@ -235,6 +266,7 @@ public class Boat : MonoBehaviour {
 	} 
 	
 	void Start () {
+ 
 		boat1=GameObject.Find("Boat1");
 		boat2=GameObject.Find("Boat2");
 		
@@ -252,7 +284,6 @@ public class Boat : MonoBehaviour {
 			gameObject.AddComponent<AudioSource>();
 		}
 		audio.clip = engineSound;
-		audio.volume = 0.5f;
 		audio.loop = true;
 		audio.Play();
 		
@@ -265,9 +296,10 @@ public class Boat : MonoBehaviour {
 		mainC.transform.position = campos;
 		mainC.transform.rotation = transform.rotation;
 		
-		maxVel = 60.0f;
+		maxVel = 70.0f;
 		maxVel_copy = maxVel;
-		Acc = 0.3f;
+		minVel = -maxVel/2.0f;
+		Acc = 0.2f;
 		Acc_copy = Acc;
 
 		rudderSensivity = 45;
@@ -296,22 +328,41 @@ public class Boat : MonoBehaviour {
 		globalscript = global.GetComponent<GlobalScript>();
 
 		selectedIndex=0;
+
+		//Init speed
+		rigidbody.velocity = new Vector3(0.0f,0.0f,0.0f);
+		
+		//arrow to boat
+		InitPos = transform.position;
+
+//		Arrow.transform.position = new Vector3(InitPos.x,InitPos.y+5.0f,InitPos.z);
+//		Arrow.transform.rotation = transform.rotation;
+
+		ArrowtoBoat = Arrow.transform.position - transform.position;
+		Arrow.renderer.enabled = false;
+
+		stop = false;
 	}
 
 	// Update is called once per frame
 	void  Update (){
+		//Add joystick control
+        bool joysticks= GlobalScript.joystick;
+
 		canControl=GuiScript.start;
 		ItemEffect(-1);
 
+		//update arrow pos
+		Arrow.transform.position = transform.position + ArrowtoBoat;
+		
 		Vector4 wavespeed = globalscript.wavecurrspeed;
 		float wavescale = globalscript.wavecurrscale;
-		Vector2 riverspeed =  wavescale/0.05f*(new Vector2(wavespeed.x,wavespeed.y)+new Vector2(wavespeed.z ,wavespeed.w));
+		Vector2 riverspeed = 5.0f/3.0f * new Vector2(wavespeed.x,wavespeed.y);
 
 		//Avoid huge wavespeed
-		riverspeed.x = Mathf.Clamp(riverspeed.x,-5.0f,5.0f);
-		riverspeed.y = Mathf.Clamp(riverspeed.y,-5.0f,5.0f);
+		float angle = Mathf.Atan2(riverspeed.y,riverspeed.x);
+		Arrow.transform.rotation = Quaternion.Euler(new Vector3(0.0f,Mathf.Rad2Deg * angle,0.0f));
 
-		//Debug.Log(riverspeed);
 
 		//lag 2s to guarantee boat leave the border
 		if(onborder)
@@ -370,120 +421,195 @@ public class Boat : MonoBehaviour {
 		steer = 0.0f;
 		rigidbody.velocity = new Vector3(0.0f,0.0f,0.0f);
 		//player1
-		if(canControl && isPlayer1)
+		if(canControl&&!stop)
 		{
 			//add wavespeed
-			rigidbody.velocity = new Vector3(riverspeed.x,0.0f,riverspeed.y);
-
-			if(joysticks)
+			rigidbody.velocity = - Arrow.transform.forward * riverspeed.magnitude;
+			if(isPlayer1)
 			{
-				if(autoAcc||Input.GetAxis("Vertical")>0.0f)
-					motor = 1.0f;
-				else
-					motor = -1.0f;
-				
-				steer = Input.GetAxis("Horizontal");
-				if(Input.GetAxis("ZAxis")<0.0f)
-					drift = true;
-				else
-					drift = false;
-				
-				
-				if(itemnums.Count>0 &&Input.GetButtonDown("Fire1"))
+				if(joysticks)
 				{
-					int tempnum = itemnums[selectedIndex];
-					if(tempnum == 1 || tempnum == 2)
-						boatScript2.ItemEffect(tempnum);
-					else 
-						ItemEffect(tempnum);
+					if(Input.GetAxis("Horizontal")==1.0f)
+						steer = 1.0f;
+					else if(Input.GetAxis("Horizontal")==-1.0f)
+						steer = -1.0f;
 					
-					itemnums.RemoveAt(selectedIndex);
-				}
-			}
-			else
-			{
-				if(Input.GetKey("w")||autoAcc)
-					motor = 1.0f;
-				if(Input.GetKey("s"))
-					motor = -1.0f;
-				
-				if(Input.GetKey("d"))
-					steer = 1.0f;
-				
-				if(Input.GetKey("a"))
-					steer = -1.0f;
-				
-				if( Mathf.Abs(steer)>0.0f && Input.GetKey(KeyCode.LeftShift))
-					drift = true;
-				else
-					drift = false;
-				
-				if(itemnums.Count>0)
-				{
-					//select powerup
-					if(Input.GetKeyDown(KeyCode.LeftAlt)){
-						selectedIndex=(selectedIndex+1)%itemnums.Count;
+					if(Input.GetAxis("ZAxis")<0.0f)
+						drift = true;
+					else
+						drift = false;
+					
+					
+					//separate turn and acc
+					if(Mathf.Abs(steer)<0.1f) 
+					{
+						if(autoAcc||Input.GetAxis("Vertical")==1.0f)
+							motor = 1.0f;
+						else if(autoAcc||Input.GetAxis("Vertical")== -1.0f)
+							motor = -1.0f;
 					}
+					
+					if(Input.GetButtonDown("Fire2"))
+						Arrow.renderer.enabled = !Arrow.renderer.enabled;
+		
 
-					//use powerup
-					if(Input.GetKeyDown(KeyCode.LeftControl)){
-						int tempnum = itemnums[selectedIndex];
-						if(tempnum == 1 || tempnum == 2)
-							boatScript2.ItemEffect(tempnum);
-						else 
-							ItemEffect(tempnum);
+					if(itemnums.Count>0)
+					{
+						//select powerup
+						if(Input.GetButtonDown("Fire3")){
+							selectedIndex=(selectedIndex+1)%itemnums.Count;
+						}
 						
-						itemnums.RemoveAt(selectedIndex);
-
-						if(selectedIndex>=itemnums.Count){
-							selectedIndex=Mathf.Max(0,itemnums.Count-1);
+						//use powerup
+						if(Input.GetButtonDown("Fire1")){
+							int tempnum = itemnums[selectedIndex];
+							if(tempnum == 1 || tempnum == 2)
+								boatScript2.ItemEffect(tempnum);
+							else 
+								ItemEffect(tempnum);
+							
+							itemnums.RemoveAt(selectedIndex);
+							
+							if(selectedIndex>=itemnums.Count){
+								selectedIndex=Mathf.Max(0,itemnums.Count-1);
+							}
+						}
+					}
+				}
+				else
+				{
+					if(Input.GetKey("w")||autoAcc)
+						motor = 1.0f;
+					if(Input.GetKey("s"))
+						motor = -1.0f;
+					
+					if(Input.GetKey("d"))
+						steer = 1.0f;
+					
+					if(Input.GetKey("a"))
+						steer = -1.0f;
+					
+					if( Mathf.Abs(steer)>0.0f && Input.GetKey(KeyCode.LeftShift))
+						drift = true;
+					else
+						drift = false;
+					
+					if(Input.GetKeyDown(KeyCode.Z))
+						Arrow.renderer.enabled = !Arrow.renderer.enabled;
+					
+					if(itemnums.Count>0)
+					{
+						//select powerup
+						if(Input.GetKeyDown(KeyCode.LeftAlt)){
+							selectedIndex=(selectedIndex+1)%itemnums.Count;
+						}
+						
+						//use powerup
+						if(Input.GetKeyDown(KeyCode.LeftControl)){
+							int tempnum = itemnums[selectedIndex];
+							if(tempnum == 1 || tempnum == 2)
+								boatScript2.ItemEffect(tempnum);
+							else 
+								ItemEffect(tempnum);
+							
+							itemnums.RemoveAt(selectedIndex);
+							
+							if(selectedIndex>=itemnums.Count){
+								selectedIndex=Mathf.Max(0,itemnums.Count-1);
+							}
 						}
 					}
 				}
 			}
-		}
-
-
-		//player2
-		if(canControl && !isPlayer1){
-			//add wavespeed
-			rigidbody.velocity = - new Vector3(riverspeed.y,0.0f,riverspeed.x);
-
-			if(Input.GetKey("up")||autoAcc)
-				motor = 1.0f;
-			if(Input.GetKey("down"))
-				motor = -1.0f;
-			
-			if(Input.GetKey("right"))
-				steer = 1.0f;
-			
-			if(Input.GetKey("left"))
-				steer = -1.0f;
-			
-			if( Mathf.Abs(steer)>0.0f && Input.GetKey(KeyCode.RightShift))
-				drift = true;
 			else
-				drift = false;	
-			
-			if(itemnums.Count>0)
 			{
-				//select powerup
-				if(Input.GetKeyDown(KeyCode.RightAlt)){
-					selectedIndex=(selectedIndex+1)%itemnums.Count;
+				if(joysticks)
+				{
+					if(Input.GetKey("up")||autoAcc)
+						motor = 1.0f;
+					if(Input.GetKey("down"))
+						motor = -1.0f;
+					
+					if(Input.GetKey("right"))
+						steer = 1.0f;
+					
+					if(Input.GetKey("left"))
+						steer = -1.0f;
+					
+					if( Mathf.Abs(steer)>0.0f && (Input.GetKey(KeyCode.RightShift)||Input.GetKey(KeyCode.LeftShift)))
+						drift = true;
+					else
+						drift = false;	
+					
+					
+					if(Input.GetKeyDown(KeyCode.Slash))
+						Arrow.renderer.enabled = !Arrow.renderer.enabled;
+					
+					if(itemnums.Count>0)
+					{
+						//select powerup
+						if(Input.GetKeyDown(KeyCode.RightAlt)||Input.GetKeyDown(KeyCode.LeftAlt)){
+							selectedIndex=(selectedIndex+1)%itemnums.Count;
+						}
+						
+						//use powerup
+						if(Input.GetKeyDown(KeyCode.RightControl)||Input.GetKeyDown(KeyCode.LeftControl)){
+							int tempnum = itemnums[selectedIndex];
+							if(tempnum == 1 || tempnum == 2)
+								boatScript1.ItemEffect(tempnum);
+							else 
+								ItemEffect(tempnum);
+							
+							itemnums.RemoveAt(selectedIndex);
+							
+							if(selectedIndex>=itemnums.Count){
+								selectedIndex=Mathf.Max(0,itemnums.Count-1);
+							}
+						}
+					}
 				}
-				
-				//use powerup
-				if(Input.GetKeyDown(KeyCode.RightControl)){
-					int tempnum = itemnums[selectedIndex];
-					if(tempnum == 1 || tempnum == 2)
-						boatScript1.ItemEffect(tempnum);
-					else 
-						ItemEffect(tempnum);
+				else
+				{
+					if(Input.GetKey("up")||autoAcc)
+						motor = 1.0f;
+					if(Input.GetKey("down"))
+						motor = -1.0f;
 					
-					itemnums.RemoveAt(selectedIndex);
+					if(Input.GetKey("right"))
+						steer = 1.0f;
 					
-					if(selectedIndex>=itemnums.Count){
-						selectedIndex=Mathf.Max(0,itemnums.Count-1);
+					if(Input.GetKey("left"))
+						steer = -1.0f;
+					
+					if( Mathf.Abs(steer)>0.0f && Input.GetKey(KeyCode.RightShift))
+						drift = true;
+					else
+						drift = false;	
+					
+					if(Input.GetKeyDown(KeyCode.Slash))
+						Arrow.renderer.enabled = !Arrow.renderer.enabled;
+					
+					if(itemnums.Count>0)
+					{
+						//select powerup
+						if(Input.GetKeyDown(KeyCode.RightAlt)){
+							selectedIndex=(selectedIndex+1)%itemnums.Count;
+						}
+						
+						//use powerup
+						if(Input.GetKeyDown(KeyCode.RightControl)){
+							int tempnum = itemnums[selectedIndex];
+							if(tempnum == 1 || tempnum == 2)
+								boatScript1.ItemEffect(tempnum);
+							else 
+								ItemEffect(tempnum);
+							
+							itemnums.RemoveAt(selectedIndex);
+							
+							if(selectedIndex>=itemnums.Count){
+								selectedIndex=Mathf.Max(0,itemnums.Count-1);
+							}
+						}
 					}
 				}
 			}
@@ -493,19 +619,17 @@ public class Boat : MonoBehaviour {
 		motor *= reverse;
 		steer *= reverse;
 		steer *= slippery;
-
-		if(motor>0.0)
+		
+		if(motor>0.0f)
 			CurrVel += Acc;
-		else 
+		else if(motor<0.0f)
 			CurrVel -= 1.5f * Acc;
 		
-		CurrVel = Mathf.Clamp(CurrVel,0.0f,maxVel);
-
-
+		CurrVel = Mathf.Clamp(CurrVel,minVel,maxVel);
+		
+		
 		rigidbody.velocity += -transform.forward * CurrVel;
-
-
-
+		
 		//Added to avoid weird rotating
 		if(rigidbody.angularVelocity.magnitude < 0.5f)
 			rigidbody.angularVelocity = new Vector3(0.0f,0.0f,0.0f);
@@ -520,25 +644,25 @@ public class Boat : MonoBehaviour {
 			engineSpume.particleEmitter.Emit();				
 		}
 		
-
-		transform.Rotate(transform.up* steer * 0.3f);
+		
+		transform.Rotate(transform.up* steer * 0.8f);
 		
 		
 		if(drift&&steer>0.1f)
 		{
-			transform.Rotate(transform.up* 1.0f);
+			transform.Rotate(transform.up* 2.0f);
 			CurrVel = CurrVel * 0.98f;
 			CurrVel = Mathf.Max(CurrVel,0.1f*maxVel);
 		}
 		else if(drift&&steer<-0.1f)
 		{
-			transform.Rotate(-transform.up* 1.0f);
+			transform.Rotate(-transform.up* 3.0f);
 			CurrVel = CurrVel * 0.98f;
 			CurrVel = Mathf.Max(CurrVel,0.1f*maxVel);
 		}
 		
 		audio.volume = 0.3f + 0.7f * CurrVel/maxVel;
-		audio.volume = Mathf.Min(audio.volume,1.0f);
+		audio.volume = Mathf.Min(audio.volume,1.0f)/2.0f;
 		
 		rpmPitch=Mathf.Lerp(rpmPitch,Mathf.Abs(CurrVel/maxVel),Time.deltaTime*0.4f);
 		audio.pitch = 0.3f + 0.7f * rpmPitch;
@@ -586,7 +710,18 @@ public class Boat : MonoBehaviour {
 		}
 	}
 
-
+	void OnTriggerStay(Collider collider){
+		if(collider.CompareTag("FinishLine")){		
+			//Stop
+			rigidbody.velocity = new Vector3(0.0f,0.0f,0.0f);
+			canControl = false;
+			stop = true;
+			if(CurrVel>=0.0f)
+			    CurrVel -= 2.0f;
+			else
+				CurrVel = 0.0f;
+		}
+	}
 
 }
 

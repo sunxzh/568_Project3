@@ -17,7 +17,9 @@ public class GuiScript : MonoBehaviour {
 	public Texture frameTex;
 	public Texture rankTimeBgTex;
 	public Texture homeBtnTex;
-	
+	//added
+	public Texture SpeedBgTex;
+
 	public float elapsedTime;
 
 	public static List<string> finalRank;
@@ -125,10 +127,10 @@ public class GuiScript : MonoBehaviour {
 	}
 
 	void OnGUI(){
-		//home button
-		if(GUI.Button(new Rect(Screen.width*(0.001f), Screen.height*0.001f, Screen.width*0.08f, Screen.width*0.08f),homeBtnTex,GUIStyle.none)){
-
-		}
+//		//home button
+//		if(GUI.Button(new Rect(Screen.width*(0.001f), Screen.height*0.001f, Screen.width*0.08f, Screen.width*0.08f),homeBtnTex,GUIStyle.none)){
+//
+//		}
 
 		//countdown text
 		GUI.Label(new Rect(Screen.width*0.5f-countdownStyle.fontSize*0.5f, Screen.height*0.5f-countdownStyle.fontSize*0.5f, countdownStyle.fontSize, countdownStyle.fontSize),countdownText,countdownStyle);
@@ -167,6 +169,18 @@ public class GuiScript : MonoBehaviour {
 		//power up
 		drawPowerups(playerScript1.itemnums,true);
 		drawPowerups(playerScript2.itemnums,false);
+
+		//added 
+		//speed bg
+		GUI.Label(new Rect(0.0f, 0.0f * Screen.height, Screen.width*0.15f, Screen.height*0.20f),SpeedBgTex);
+		GUI.Label(new Rect(Screen.width*(0.85f), 0.0f * Screen.height, Screen.width*0.15f, Screen.height*0.20f),SpeedBgTex);
+		int v1 = (int)Mathf.Round(Mathf.Abs(2.0f * playerScript1.rigidbody.velocity.magnitude));
+		int v2 = (int)Mathf.Round(Mathf.Abs(2.0f * playerScript2.rigidbody.velocity.magnitude));
+		if(playerScript1.stop) v1 = 0;
+		if(playerScript2.stop) v2 = 0;
+
+		GUI.Label(new Rect(Screen.width*0.15f/2.0f-style.fontSize*0.5f, 0.04f * Screen.height, style.fontSize, style.fontSize),  v1 + " KPH",style);
+		GUI.Label(new Rect(Screen.width*(0.92f)-style.fontSize*0.5f, 0.04f * Screen.height, style.fontSize, style.fontSize), v2 + " KPH",style);
 	}
 	
 	// Update is called once per frame
