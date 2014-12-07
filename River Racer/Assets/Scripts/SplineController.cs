@@ -48,7 +48,8 @@ public class SplineController : MonoBehaviour
 	{
 		mSplineInterp = GetComponent(typeof(SplineInterpolator)) as SplineInterpolator;
 
-		Duration = Random.Range (175f, 225f);
+		if(Application.loadedLevelName == "GameScene")
+			Duration = Random.Range (175f, 225f);
 
 		mTransforms = GetTransforms();
 

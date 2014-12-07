@@ -160,7 +160,7 @@ public class Boat : MonoBehaviour {
 
 			if(itemstarttimes[tempid]<0.01f)
 			{
-				AudioSource.PlayClipAtPoint(itemSounds[tempid], transform.position ,1.0f); 
+				AudioSource.PlayClipAtPoint(itemSounds[tempid], transform.position ,0.5f); 
 			}
 			
 			if(shield)
@@ -734,13 +734,13 @@ public class Boat : MonoBehaviour {
 		}
 
 		if(collider.CompareTag("OilBarrels")){
-			collider.GetComponent<OilScript>().onoff = true;
 			ItemEffect(7);
+			collider.GetComponent<OilScript>().onoff = true;
 		}
 
 		if(collider.CompareTag("Mines")){
-			collider.GetComponent<MineScript>().onoff = true;
 			ItemEffect(6);
+			collider.GetComponent<MineScript>().onoff = true;
 		}
 	}
 
