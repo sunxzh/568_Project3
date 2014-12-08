@@ -69,8 +69,8 @@ public class TitleScript : MonoBehaviour {
 			if(GUI.Button(StartR,"Start Game",StartStyle))
 				Application.LoadLevel("GameScene");
 			
-			if(GUI.Button(IntroR,"Introduction",IntroStyle)){}
-			//Application.LoadLevel("IntroScene");
+			if(GUI.Button(IntroR,"Introduction",IntroStyle))
+			    Application.LoadLevel("IntroScene");
 			
 			if(GUI.Button(ExitR,"Exit",ExitStyle))
 				Application.Quit();

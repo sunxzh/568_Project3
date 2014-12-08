@@ -313,7 +313,7 @@ public class Boat : MonoBehaviour {
 		
 		maxVel = 70.0f;
 		maxVel_copy = maxVel;
-		minVel = -maxVel/2.0f;
+		minVel = -maxVel;
 		Acc = 0.3f;
 		Acc_copy = Acc;
 
