@@ -7,19 +7,19 @@ Direct3D:
     VRAM:     1988 MB (via DXGI)
     Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=0 INTZ=1 RAWZ=0 NULL=1 RESZ=0 SlowINTZ=0
 Begin MonoManager ReloadAssembly
-Platform assembly: C:\Users\Bo\Desktop\Final_Data\Managed\UnityEngine.dll (this message is harmless)
-Loading C:\Users\Bo\Desktop\Final_Data\Managed\UnityEngine.dll into Unity Child Domain
-Platform assembly: C:\Users\Bo\Desktop\Final_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
-Loading C:\Users\Bo\Desktop\Final_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
-Platform assembly: C:\Users\Bo\Desktop\Final_Data\Managed\Assembly-CSharp.dll (this message is harmless)
-Loading C:\Users\Bo\Desktop\Final_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-Platform assembly: C:\Users\Bo\Desktop\Final_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
-Loading C:\Users\Bo\Desktop\Final_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
-Platform assembly: C:\Users\Bo\Desktop\Final_Data\Managed\Assembly-UnityScript.dll (this message is harmless)
-Loading C:\Users\Bo\Desktop\Final_Data\Managed\Assembly-UnityScript.dll into Unity Child Domain
-Platform assembly: C:\Users\Bo\Desktop\Final_Data\Managed\RiverTools.dll (this message is harmless)
-Loading C:\Users\Bo\Desktop\Final_Data\Managed\RiverTools.dll into Unity Child Domain
-- Completed reload, in  0.043 seconds
+Platform assembly: D:\Graduate\second-year-first-semester\CIS-568\HW3\568_Project3\Final_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading D:\Graduate\second-year-first-semester\CIS-568\HW3\568_Project3\Final_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: D:\Graduate\second-year-first-semester\CIS-568\HW3\568_Project3\Final_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading D:\Graduate\second-year-first-semester\CIS-568\HW3\568_Project3\Final_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: D:\Graduate\second-year-first-semester\CIS-568\HW3\568_Project3\Final_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading D:\Graduate\second-year-first-semester\CIS-568\HW3\568_Project3\Final_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: D:\Graduate\second-year-first-semester\CIS-568\HW3\568_Project3\Final_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
+Loading D:\Graduate\second-year-first-semester\CIS-568\HW3\568_Project3\Final_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
+Platform assembly: D:\Graduate\second-year-first-semester\CIS-568\HW3\568_Project3\Final_Data\Managed\Assembly-UnityScript.dll (this message is harmless)
+Loading D:\Graduate\second-year-first-semester\CIS-568\HW3\568_Project3\Final_Data\Managed\Assembly-UnityScript.dll into Unity Child Domain
+Platform assembly: D:\Graduate\second-year-first-semester\CIS-568\HW3\568_Project3\Final_Data\Managed\RiverTools.dll (this message is harmless)
+Loading D:\Graduate\second-year-first-semester\CIS-568\HW3\568_Project3\Final_Data\Managed\RiverTools.dll into Unity Child Domain
+- Completed reload, in  0.045 seconds
 desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
@@ -31,13 +31,13 @@ BoatSpline
  
 (Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
 
-UnloadTime: 161.105392 ms
+UnloadTime: 128.310837 ms
 Unloading 4 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
 
-Unloading 709 unused Assets to reduce memory usage. Loaded Objects now: 141.
-Total: 2.628354 ms (FindLiveObjects: 0.024376 ms CreateObjectMapping: 0.013257 ms MarkObjects: 0.071418 ms  DeleteObjects: 2.039048 ms)
+Unloading 709 unused Assets to reduce memory usage. Loaded Objects now: 142.
+Total: 2.879386 ms (FindLiveObjects: 0.023948 ms CreateObjectMapping: 0.017533 ms MarkObjects: 0.085958 ms  DeleteObjects: 2.312319 ms)
 
-UnloadTime: 0.560652 ms
+UnloadTime: 0.443048 ms
 CamSpline
  
 (Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
@@ -48,10 +48,10 @@ BoatSpline
 
 Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
 
-Unloading 9 unused Assets to reduce memory usage. Loaded Objects now: 1937.
-Total: 0.903630 ms (FindLiveObjects: 0.056022 ms CreateObjectMapping: 0.021810 ms MarkObjects: 0.252315 ms  DeleteObjects: 0.156093 ms)
+Unloading 9 unused Assets to reduce memory usage. Loaded Objects now: 1940.
+Total: 0.798855 ms (FindLiveObjects: 0.055167 ms CreateObjectMapping: 0.021810 ms MarkObjects: 0.238202 ms  DeleteObjects: 0.092373 ms)
 
-UnloadTime: 127.653954 ms
+UnloadTime: 128.868073 ms
 Spline1
  
 (Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
@@ -66,51 +66,37 @@ Spline3
 
 Unloading 2 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
 
-Unloading 17 unused Assets to reduce memory usage. Loaded Objects now: 2592.
-Total: 1.170913 ms (FindLiveObjects: 0.084675 ms CreateObjectMapping: 0.027369 ms MarkObjects: 0.282250 ms  DeleteObjects: 0.356234 ms)
+Unloading 17 unused Assets to reduce memory usage. Loaded Objects now: 2593.
+Total: 1.265852 ms (FindLiveObjects: 0.109479 ms CreateObjectMapping: 0.032501 ms MarkObjects: 0.338273 ms  DeleteObjects: 0.404559 ms)
 
-Platform assembly: C:\Users\Bo\Desktop\Final_Data\Managed\System.dll (this message is harmless)
-UnloadTime: 177.823196 ms
+Platform assembly: D:\Graduate\second-year-first-semester\CIS-568\HW3\568_Project3\Final_Data\Managed\System.dll (this message is harmless)
+Boat1
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+Boat1
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+Boat1
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+Boat1
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+Boat1
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+UnloadTime: 160.667908 ms
 Spline2
  
 (Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
 
 Unloading 2 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
 
-Unloading 621 unused Assets to reduce memory usage. Loaded Objects now: 397.
-Total: 4.318866 ms (FindLiveObjects: 0.043620 ms CreateObjectMapping: 0.025659 ms MarkObjects: 0.152672 ms  DeleteObjects: 3.507181 ms)
-
-UnloadTime: 164.691681 ms
-CamSpline
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-BoatSpline
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
-
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 1940.
-Total: 1.202559 ms (FindLiveObjects: 0.073128 ms CreateObjectMapping: 0.033784 ms MarkObjects: 0.313897 ms  DeleteObjects: 0.230504 ms)
-
-UnloadTime: 150.578293 ms
-Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
-
-Unloading 708 unused Assets to reduce memory usage. Loaded Objects now: 141.
-Total: 3.788576 ms (FindLiveObjects: 0.022237 ms CreateObjectMapping: 0.018816 ms MarkObjects: 0.105630 ms  DeleteObjects: 3.087226 ms)
-
-UnloadTime: 0.283961 ms
-CamSpline
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-BoatSpline
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
-
-Unloading 9 unused Assets to reduce memory usage. Loaded Objects now: 1937.
-Total: 1.143543 ms (FindLiveObjects: 0.065003 ms CreateObjectMapping: 0.026942 ms MarkObjects: 0.270704 ms  DeleteObjects: 0.380183 ms)
+Unloading 615 unused Assets to reduce memory usage. Loaded Objects now: 406.
+Total: 3.774892 ms (FindLiveObjects: 0.044475 ms CreateObjectMapping: 0.022665 ms MarkObjects: 0.143263 ms  DeleteObjects: 3.036335 ms)
 
